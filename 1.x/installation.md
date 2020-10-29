@@ -4,7 +4,7 @@
 
 ## Установка Jetstream
 
-Если вы установили [Установщик Laravel](https://laravel.com/docs/installation#installing-laravel), вы можете использовать параметр `--jet` для создания нового приложения Laravel на базе Jetstream:
+Если Вы установили [Установщик Laravel](https://laravel.com/docs/installation#installing-laravel), Вы можете использовать параметр `--jet` для создания нового приложения Laravel на базе Jetstream:
 
 ```bash
 laravel new project-name --jet
@@ -16,9 +16,9 @@ laravel new project-name --jet
 php artisan migrate
 ```
 
-:::danger Existing Projects
+:::danger Существующие проекты
 
-Jetstream is only meant to be installed on **new** Laravel projects. You should not attempt to migrate an existing project to Jetstream.
+Jetstream предназначен для установки только в **новых** проектах Laravel. Не следует пытаться перенести существующий проект в Jetstream.
 :::
 
 ### Установка с помощью Composer
@@ -113,7 +113,7 @@ php artisan vendor:publish --tag=jetstream-views
 php artisan vendor:publish --tag=jetstream-views
 ```
 
-Затем вы должны настроить SVG, расположенные в `resources/views/vendor/jetstream/components/authentication-card-logo.blade.php`, `resources/js/Jetstream/ApplicationLogo.vue` и `resources/js/Jetstream/ApplicationMark.vue`. После настройки этих компонентов Вы должны перестроить свои ресурсы:
+Затем Вы должны настроить SVG, расположенные в `resources/views/vendor/jetstream/components/authentication-card-logo.blade.php`, `resources/js/Jetstream/ApplicationLogo.vue` и `resources/js/Jetstream/ApplicationMark.vue`. После настройки этих компонентов Вы должны перестроить свои ресурсы:
 
 ```bash
 npm run dev

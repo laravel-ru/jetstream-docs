@@ -22,7 +22,7 @@ Laravel Livewire - это библиотека, которая упрощает 
 
 :::tip Livewire Скринкасты
 
-Если вы новичок в Livewire, просмотрите [скринкасты, доступные на веб-сайте Livewire](https://laravel-livewire.com/screencasts/installation).
+Если Вы новичок в Livewire, просмотрите [скринкасты, доступные на веб-сайте Livewire](https://laravel-livewire.com/screencasts/installation).
 :::
 
 ### Inertia.js + Vue
