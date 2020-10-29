@@ -7,7 +7,7 @@ module.exports = [
             'installation',
         ],
     }, {
-        title: "Features",
+        title: "Функции",
         collapsable: false,
         children: prefix('features', [
             'authentication',

@@ -1,30 +1,30 @@
-# Profile Management
+# Управление профилем
 
 [[toc]]
 
-## Introduction
+## Вступление
 
-Laravel Jetstream's profile management features are accessed by the user using the top-right user profile navigation dropdown menu. Jetstream scaffolds views and actions that allow the user to update their name, email address, and, optionally, their profile photo.
+Доступ к функциям управления профилями Laravel Jetstream осуществляется пользователем с помощью раскрывающегося меню навигации профиля пользователя в правом верхнем углу. Jetstream формирует представления и действия, которые позволяют пользователю обновлять свое имя, адрес электронной почты и, при необходимости, фотографию своего профиля.
 
-![Screenshot of Profile Management](./../../assets/img/profile-management.png)
+![Снимок экрана управления профилем](./../../assets/img/profile-management.png)
 
-## Views / Pages
+## Представления / Страницы
 
-When using the Livewire stack, this view is displayed using the `resources/views/profile/update-profile-information-form.blade.php` Blade template. When using the Inertia stack, this view is displayed using the `resources/js/Pages/Profile/UpdateProfileInformationForm.vue` template.
+При использовании стека Livewire это представление отображается с использованием блейд-шаблона `resources/views/profile/update-profile-information-form.blade.php`. При использовании стека Inertia это представление отображается с использованием шаблона `resources/js/Pages/Profile/UpdateProfileInformationForm.vue`.
 
-Each of these templates will receive the entire authenticated user object so that you can add additional fields to these forms as necessary. Any additional inputs added to the forms will be included in the `$input` array that is passed to your `UpdateUserProfileInformation` action.
+Каждый из этих шаблонов получит весь объект аутентифицированного пользователя, так что Вы можете добавить дополнительные поля в эти формы по мере необходимости. Любые дополнительные входные данные, добавленные к формам, будут включены в массив `$input`, который передается Вашему действию `UpdateUserProfileInformation`.
 
-## Actions
+## Действия
 
-As typical of most Jetstream features, the logic executed to satisfy profile update requests can be found in an action class within your application. Specifically, the `App\Actions\Fortify\UpdateUserProfileInformation` class will be invoked when the user updates their profile. This action is responsible for validating the input and updating the user's profile information.
+Как типично для большинства функций Jetstream, логику, выполняемую для удовлетворения запросов на обновление профиля, можно найти в классе действий в Вашем приложении. В частности, класс `App\Actions\Fortify\UpdateUserProfileInformation` будет вызываться, когда пользователь обновляет свой профиль. Это действие отвечает за проверку ввода и обновление информации профиля пользователя.
 
-Therefore, any customizations you wish to make to this logic should be made in this class. The action receives the currently authenticated `$user` and an array of `$input` that contains all of the input from the incoming request, including the updated profile photo if applicable.
+Следовательно, любые настройки, которые Вы хотите внести в эту логику, должны выполняться в этом классе. Действие получает аутентифицированный в данный момент `$user` и массив `$input`, который содержит все данные входящего запроса, включая обновленную фотографию профиля, если применимо.
 
-## Profile Photos
+## Фото профиля
 
-### Enabling Profile Photos
+### Включение фото профиля
 
-If you wish to allow users to upload custom profile photos, you must enable the feature in your `config/jetstream.php` configuration file. To enable the feature, simply uncomment the feature entry from the `features` configuration item within this file:
+Если Вы хотите разрешить пользователям загружать пользовательские фотографии профиля, Вы должны включить эту функцию в файле конфигурации `config/jetstream.php`. Чтобы включить эту функцию, просто раскомментируйте запись функции из элемента конфигурации `features` в этом файле:
 
 ```php
 'features' => [
@@ -34,19 +34,19 @@ If you wish to allow users to upload custom profile photos, you must enable the 
 ],
 ```
 
-### Managing Profile Photos
+### Управление фотографиями профиля
 
-By default, Jetstream allows users to upload custom profile photos. This functionality is supported by the `Laravel\Jetstream\HasProfilePhoto` trait that is automatically attached to your `App\Models\User` class during Jetstream's installation.
+По умолчанию Jetstream позволяет пользователям загружать собственные фотографии профиля. Эта функциональность поддерживается трейтом `Laravel\Jetstream\HasProfilePhoto`, который автоматически прикрепляется к Вашему классу `App\Models\User` во время установки Jetstream.
 
-This trait contains methods such as `updateProfilePhoto`, `getProfilePhotoUrlAttribute`, `defaultProfilePhotoUrl`, and `profilePhotoDisk` which may all be overwritten by your own `App\Models\User` class if you need to customize their behavior. You are encouraged to read through the source code of this trait so that you have a full understanding of the features it is providing to your application.
+Эта черта содержит такие методы, как `updateProfilePhoto`, `getProfilePhotoUrlAttribute`, `defaultProfilePhotoUrl` и `profilePhotoDisk`, которые могут быть перезаписаны Вашим собственным классом `App\Models\User`, если Вам нужно настроить их поведение. Вам предлагается прочитать исходный код этого трейта, чтобы получить полное представление о функциях, которые он предоставляет Вашему приложению.
 
-The `updateProfilePhoto` method is the primary method used to store profile photos and is called by the `UpdateUserProfileInformation` action.
+Метод `updateProfilePhoto` является основным методом, используемым для хранения фотографий профиля, и вызывается действием `UpdateUserProfileInformation`.
 
 :::tip Laravel Vapor
 
-By default, the `s3` disk will be used automatically when your application is running within [Laravel Vapor](https://vapor.laravel.com).
+По умолчанию диск `s3` будет использоваться автоматически, когда Ваше приложение запущено в [Laravel Vapor](https://vapor.laravel.com).
 :::
 
-## Account Deletion
+## Удаление аккаунта
 
-The profile management screen also includes an action panel that allows the user to delete their application account. When the user chooses to delete their account, the `App\Actions\Jetstream\DeleteUser` action class will be invoked. You are free to customize your application's account deletion logic within this class.
+Экран управления профилем также включает панель действий, которая позволяет пользователю удалить свою учетную запись приложения. Когда пользователь решает удалить свою учетную запись, будет вызван класс действия `App\Actions\Jetstream\DeleteUser`. Вы можете настроить логику удаления учетной записи в этом классе.

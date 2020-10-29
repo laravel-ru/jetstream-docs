@@ -1,80 +1,80 @@
-# Teams
+# Команды
 
 [[toc]]
 
-## Introduction
+## Вступление
 
-If you installed Jetstream using the `teams` option, your application will be scaffolded to support team creation and management:
+Если Вы установили Jetstream с помощью опции `team`, Ваше приложение будет построено для поддержки создания и управления командами:
 
 ```bash
 laravel new project-name --jet --teams
 ```
 
-:::warning Jetstream Teams
+:::warning Jetstream Команды
 
-Jetstream's team scaffolding and opinions may not work for every application. If it doesn't work for your use case, feel free to create a non-team based Jetstream application and add team functionality to your application yourself.
+Каркас и опции команды Jetstream могут работать не для всех приложений. Если это не работает для Вашего варианта использования, смело создавайте приложение Jetstream, не основанное на команде, и самостоятельно добавляйте командные функции в свое приложение.
 :::
 
-Jetstream's team features allow each registered user to create and belong to multiple teams. By default, every registered user will belong to a "Personal" team. For example, if a user named "Sally Jones" creates a new account, they will be assigned to a team named `Sally's Team`. After registration, the user may rename this team or create additional teams.
+Командные функции Jetstream позволяют каждому зарегистрированному пользователю создавать несколько команд и входить в них. По умолчанию каждый зарегистрированный пользователь будет входить в «Персональную» команду. Например, если пользователь с именем «Sally Jones» создает новую учетную запись, он будет назначен в команду с именем `Sally's Team`. После регистрации пользователь может переименовать эту команду или создать дополнительные команды.
 
-![Screenshot of Laravel Teams](./../../assets/img/teams.png)
+![Скриншот команды Laravel](./../../assets/img/teams.png)
 
-## Team Creation / Deletion
+## Создание / удаление команды
 
-The team creation view is accessed via the top-right user navigation dropdown menu.
+Доступ к представлению создания команды осуществляется через раскрывающееся меню навигации пользователя в правом верхнем углу.
 
-### Views / Pages
+### Представления / Страницы
 
-When using the Livewire stack, the team creation view is displayed using the `resources/views/teams/create-team-form.blade.php` Blade template. When using the Inertia stack, this view is displayed using the `resources/js/Pages/Teams/CreateTeamForm.vue` template.
+При использовании стека Livewire представление создания команды отображается с использованием шаблона Blade `resources/views/teams/create-team-form.blade.php`. При использовании стека Inertia это представление отображается с использованием шаблона `resources/js/Pages/Teams/CreateTeamForm.vue`.
 
-### Actions
+### Действия
 
-Team creation and deletion logic may be customized by modifying the relevant action classes within your `app/Actions/Jetstream` directory. These actions include `CreateTeam`, `UpdateTeamName`, and `DeleteTeam`. Each of these actions is invoked when their corresponding task is performed by the user in the application's UI. You are free to modify these actions as needed based on your application's needs.
+Логику создания и удаления команды можно настроить, изменив соответствующие классы действий в Вашем каталоге `app/Actions/Jetstream`. Эти действия включают `CreateTeam`, `UpdateTeamName` и `DeleteTeam`. Каждое из этих действий вызывается, когда соответствующая задача выполняется пользователем в пользовательском интерфейсе приложения. Вы можете изменять эти действия по мере необходимости в зависимости от потребностей Вашего приложения.
 
-## Inspecting User Teams
+## Проверка пользовательских команд
 
-Information about a user's teams may be accessed via the methods provided by the `Laravel\Jetstream\HasTeams` trait. This trait is automatically applied to your application's `App\Models\User` model during Jetstream's installation. This trait provides a variety of helpful methods that allow you to inspect a user's teams:
+Доступ к информации о командах пользователя можно получить с помощью методов, предоставляемых трейтом `Laravel\Jetstream\HasTeams`. Этот трейт автоматически применяется к модели Вашего приложения `App\Models\User` во время установки Jetstream. Этот трейт предоставляет множество полезных методов, которые позволяют Вам проверять команды пользователя:
 
 ```php
-// Access a user's currently selected team...
+// Доступ к выбранной в данный момент команде пользователя...
 $user->currentTeam : Laravel\Jetstream\Team
 
-// Access all of the team's (including owned teams) that a user belongs to...
+// Доступ ко всем командам (включая собственные команды), к которым принадлежит пользователь...
 $user->allTeams() : Illuminate\Support\Collection
 
-// Access all of a user's owned teams...
+// Доступ ко всем командам, принадлежащим пользователю...
 $user->ownedTeams : Illuminate\Database\Eloquent\Collection
 
-// Access all of the teams that a user belongs to but does not own...
+// Доступ ко всем командам, к которым пользователь принадлежит, но не владелец...
 $user->teams : Illuminate\Database\Eloquent\Collection
 
-// Access a user's "personal" team...
+// Доступ к "личной" команде пользователя...
 $user->personalTeam() : Laravel\Jetstream\Team
 
-// Determine if a user owns a given team...
+// Определение, владеет ли пользователь данной командой...
 $user->ownsTeam($team) : bool
 
-// Determine if a user belongs to a given team...
+// Определение принадлежности пользователя к определенной команды...
 $user->belongsToTeam($team) : bool
 
-// Get the role that the user is assigned on the team...
+// Получение роли, назначенной пользователю в команде...
 $user->teamRole($team) : \Laravel\Jetstream\Role
 
-// Determine if the user has the given role on the given team...
+// Определение наличия у пользователя данной роли в данной команде...
 $user->hasTeamRole($team, 'admin') : bool
 
-// Access an array of all permissions a user has for a given team...
+// Доступ к массиву всех разрешений, имеющихся у пользователя для данной команде...
 $user->teamPermissions($team) : array
 
-// Determine if a user has a given team permission...
+// Определение, имеет ли пользователь данное разрешение рабочей команды...
 $user->hasTeamPermission($team, 'server:create') : bool
 ```
 
-### Current Team
+### Текущая команда
 
-Every user within a Jetstream application has a "current team". This is the team that the user is actively viewing resources for. For example, if you are building a calendar application, your application would display the upcoming calendar events for the user's current team.
+У каждого пользователя в приложении Jetstream есть «текущая команда». Это команда, для которой пользователь активно просматривает ресурсы. Например, если Вы создаете приложение-календарь, Ваше приложение будет отображать предстоящие события календаря для текущей команды пользователя.
 
-You may access the user's current team using the `$user->currentTeam` Eloquent relationship. This team may be used to scope your other Eloquent queries by the team:
+Вы можете получить доступ к текущей команде пользователя, используя отношение Eloquent `$user->currentTeam`. Эту команду можно использовать для анализа других Ваших запросов Eloquent:
 
 ```php
 return App\Models\Calendar::where(
@@ -82,51 +82,51 @@ return App\Models\Calendar::where(
 )->get();
 ```
 
-A user may switch their current team via the user profile dropdown menu available within the Jetstream navigation bar.
+Пользователь может переключить свою текущую команду через раскрывающееся меню профиля пользователя, доступное на панели навигации Jetstream.
 
-![Screenshot of Team Switcher](./../../assets/img/team-switcher.png)
+![Скриншот смены команды](./../../assets/img/team-switcher.png)
 
-### The Team Object
+### Объект команды
 
-The team object that is accessed via `$user->currentTeam` or via Eloquent queries provides a variety of useful methods for inspecting the team's attributes and relationships:
+Объект команды, доступ к которому осуществляется через `$user->currentTeam` или через запросы Eloquent, предоставляет множество полезных методов для проверки атрибутов и взаимосвязей команды:
 
 ```php
-// Access the team's owner...
+// Доступ к владельцу команды...
 $team->owner : \App\Models\User
 
-// Get all of the team's users, including the owner...
+// Получить всех пользователей команды, включая владельца...
 $team->allUsers() : Illuminate\Database\Eloquent\Collection
 
-// Get all of the team's users, excluding the owner...
+// Получить всех пользователей команды, исключая владельца...
 $team->users : Illuminate\Database\Eloquent\Collection
 
-// Determine if the given user is a team member...
+// Определение, является ли данный пользователь членом команды...
 $team->hasUser($user) : bool
 
-// Determine if the team has a member with the given email address...
+// Определение, есть ли в команде участник с данным адресом электронной почты...
 $team->hasUserWithEmail($emailAddress) : bool
 
-// Determine if the given user is a team member with the given permission...
+// Определение, является ли данный пользователь членом команды с данным разрешением...
 $team->userHasPermission($user, $permission) : bool
 ```
 
-## Member Management
+## Управление участниками
 
-Team members may be added and removed via Jetstream's "Team Settings" view. The backend logic that manages these actions may be customized by modifying the relevant actions, such as the `App\Actions\Jetstream\AddTeamMember` class.
+Участники команды могут быть добавлены и удалены через представление Jetstream «Настройки команды». Логика серверной части, которая управляет этими действиями, может быть настроена путем изменения соответствующих действий, таких как класс `App\Actions\Jetstream\AddTeamMember`.
 
-### Member Management Views / Pages
+### Управление участниками Представления / Страницы
 
-When using the Livewire stack, the team member manager view is displayed using the `resources/views/teams/team-member-manager.blade.php` Blade template. When using the Inertia stack, this view is displayed using the `resources/js/Pages/Teams/TeamMemberManager.vue` template. Generally, these templates should not require customization.
+При использовании стека Livewire представление менеджера членов команды отображается с использованием блейд-шаблона `resources/views/teams/team-member-manager.blade.php`. При использовании стека Inertia это представление отображается с использованием шаблона `resources/js/Pages/Teams/TeamMemberManager.vue`. Как правило, эти шаблоны не требуют настройки.
 
-### Member Management Actions
+### Управление участниками Действия
 
-Team member addition logic may be customized by modifying the `App\Actions\Jetstream\AddTeamMember` action class. The class' `add` method is invoked with the currently authenticated user, the `Laravel\Jetstream\Team` instance, the email address of the user being added to the team, and the role (if applicable) of the user being added to the team.
+Логика добавления членов команды может быть настроена путем изменения класса действия `App\Actions\Jetstream\AddTeamMember`. Метод класса `add` вызывается с текущим аутентифицированным пользователем, экземпляром `Laravel\Jetstream\Team`, адресом электронной почты пользователя, добавляемого в команду, и ролью (если применимо) пользователя, добавляемого в команду.
 
-This action is responsible for validating that the user can actually be added to the team and then adding the user to the team. You are free to customize this action based on the needs of your particular application.
+Это действие отвечает за проверку того, что пользователь действительно может быть добавлен в команду, а затем за добавление пользователя в команду. Вы можете настроить это действие в соответствии с потребностями Вашего конкретного приложения.
 
-### Roles / Permissions
+### Роли / Разрешения
 
-Each team member added to a team may be assigned a given role, and each role is assigned a set of permissions. Role permissions are defined in your application's `JetstreamServiceProvider` using the `Jetstream::role` method. This method accepts a "slug" for the role, a user-friendly role name, the role permissions, and a description of the role. This information will be used to display the role within the team member management view:
+Каждому участнику команды, добавленному в команду, может быть назначена определенная роль, и каждой роли назначается набор разрешений. Разрешения ролей определяются в Вашем приложении `JetstreamServiceProvider` с помощью метода `Jetstream::role`. Этот метод принимает «слаг» для роли, удобное для пользователя имя роли, разрешения роли и описание роли. Эта информация будет использоваться для отображения роли в представлении управления членами команды:
 
 ```php
 Jetstream::defaultApiTokenPermissions(['read']);
@@ -136,37 +136,37 @@ Jetstream::role('admin', 'Administrator', [
     'read',
     'update',
     'delete',
-])->description('Administrator users can perform any action.');
+])->description('Пользователи-администраторы могут выполнять любые действия.');
 
 Jetstream::role('editor', 'Editor', [
     'read',
     'create',
     'update',
-])->description('Editor users have the ability to read, create, and update.');
+])->description('Пользователи-редакторы могут читать, создавать и обновлять.');
 ```
 
-:::tip Team API Support
+:::tip Поддержка API Команды
 
-When Jetstream is installed with team support, available API permissions are automatically derived by combining all unique permissions available to roles. Therefore, a separate call to the `Jetstream::permissions` method is unnecessary.
+Когда Jetstream устанавливается с поддержкой команды, доступные разрешения API автоматически выводятся путем объединения всех уникальных разрешений, доступных для ролей. Следовательно, отдельный вызов метода `Jetstream::permissions` не требуется.
 :::
 
-### Authorization
+### Авторизация
 
-Of course, you will need a way to authorize that incoming requests initiated by a team member may actually be performed by that user. A user's team permissions may be inspected using the `hasTeamPermission` method available via the `Laravel\Jetstream\HasTeams` trait. There is never a need to inspect a user's role. You only need to inspect that the user has a given granular permission. Roles are simply a presentational concept used to group granular permissions. Typically, you will execute calls to this method within your application's [authorization policies](https://laravel.com/docs/authorization):
+Конечно, Вам понадобится способ авторизации того, что входящие запросы, инициированные членом команды, могут действительно выполняться этим пользователем. Разрешения команды пользователя могут быть проверены с помощью метода `hasTeamPermission`, доступного через трейт `Laravel\Jetstream\HasTeams`. Нет необходимости проверять роль пользователя. Вам нужно только убедиться, что у пользователя есть определенные разрешения. Роли - это просто презентационная концепция, используемая для группировки детализированных разрешений. Обычно вызовы этого метода приложения выполняются в [политиках авторизации](https://laravel.com/docs/authorization):
 
 ```php
 if ($request->user()->hasTeamPermission($team, 'read')) {
-    // The user's role includes the "read" permission...
+    // Роль пользователя включает разрешение на "чтение"...
 }
 ```
 
-#### Combining Team Permissions With API Permissions
+#### Объединение разрешений команды с разрешениями API
 
-When building a Jetstream application that provides both API support and team support, you should verify an incoming request's team permissions **and** API token permissions within your application's authorization policies. This is important because an API token may have the theoretical ability to perform an action while a user does not actually have that action granted to them via their team permissions:
+При создании приложения Jetstream, которое обеспечивает как поддержку API, так и поддержку команды, Вы должны проверить разрешения команды **и** разрешения токена API входящего запроса в политиках авторизации вашего приложения. Это важно, потому что токен API может иметь теоретическую способность выполнять действие, в то время как пользователю фактически не предоставлено это действие через разрешения своей команды:
 
 ```php
 /**
- * Determine whether the user can view a flight.
+ * Определите, может ли пользователь просматривать.
  *
  * @param  \App\Models\User  $user
  * @param  \App\Models\Flight  $flight

@@ -1,68 +1,68 @@
-# Security
+# Безопасность
 
 [[toc]]
 
-## Introduction
+## Вступление
 
-Laravel Jetstream's security features are accessed by the user using the top-right user profile navigation dropdown menu. Jetstream scaffolds views and actions that allow the user to update their password, enable / disable two-factor authentication, and logout their other browser sessions.
+Доступ к функциям безопасности Laravel Jetstream осуществляется через раскрывающееся меню навигации профиля пользователя в правом верхнем углу. Jetstream формирует представления и действия, которые позволяют пользователю обновлять свой пароль, включать / отключать двухфакторную аутентификацию и выходить из других сеансов браузера.
 
-![Screenshot of Security](./../../assets/img/security.png)
+![Снимок экрана безопасности](./../../assets/img/security.png)
 
-### Two-Factor Authentication
+### Двухфакторная аутентификация
 
-Laravel Jetstream automatically scaffolds two factor authentication support for all Jetstream applications. When a user enables two-factor authentication for their account, they should scan the given QR code using a free authenticator application such as Google Authenticator. In addition, they should store the listed recovery codes in a secure password manager such as 1Password.
+Laravel Jetstream автоматически поддерживает двухфакторную аутентификацию для всех приложений Jetstream. Когда пользователь включает двухфакторную аутентификацию для своей учетной записи, он должен сканировать данный QR-код с помощью бесплатного приложения для аутентификации, такого как Google Authenticator. Кроме того, они должны хранить перечисленные коды восстановления в безопасном менеджере паролей, таком как 1Password.
 
-If the user loses access to their mobile device, the Jetstream login view will allow them to authenticate using one of their recovery codes instead of the temporary token provided by their mobile device's authenticator application.
+Если пользователь теряет доступ к своему мобильному устройству, представление входа в систему Jetstream позволит ему аутентифицироваться с использованием одного из своих кодов восстановления вместо временного токена, предоставленного приложением аутентификатора их мобильного устройства.
 
-## Views / Pages
+## Представления / Страницы
 
-Typically, the views and pages for these features should not require customization, as they are already feature complete. However, their locations are described below.
+Как правило, представления и страницы для этих функций не требуют настройки, поскольку они уже завершены. Однако их расположение описано ниже.
 
-### Password Update
+### Обновление пароля
 
-When using the Livewire stack, the password update view is displayed using the `resources/views/profile/update-password-form.blade.php` Blade template. When using the Inertia stack, this view is displayed using the `resources/js/Pages/Profile/UpdatePasswordForm.vue` template.
+При использовании стека Livewire представление обновления пароля отображается с использованием шаблона Blade `resources/views/profile/update-password-form.blade.php`. При использовании стека Inertia это представление отображается с использованием шаблона `resources/js/Pages/Profile/UpdatePasswordForm.vue`.
 
-### Two-Factor Authentication
+### Двухфакторная аутентификация
 
-When using the Livewire stack, the two-factor authentication management view is displayed using the `resources/views/profile/two-factor-authentication-form.blade.php` Blade template. When using the Inertia stack, this view is displayed using the `resources/js/Pages/Profile/TwoFactorAuthenticationForm.vue` template.
+При использовании стека Livewire вид управления двухфакторной аутентификацией отображается с использованием блейд-шаблона `resources/views/profile/two-factor-authentication-form.blade.php`. При использовании стека Inertia это представление отображается с использованием шаблона `resources/js/Pages/Profile/TwoFactorAuthenticationForm.vue`.
 
-### Browser Sessions
+### Сеансы браузера
 
-When using the Livewire stack, the browser session management view is displayed using the `resources/views/profile/logout-other-browser-sessions-form.blade.php` Blade template. When using the Inertia stack, this view is displayed using the `resources/js/Pages/Profile/LogoutOtherBrowserSessionsForm.vue` template.
+При использовании стека Livewire представление управления сеансом браузера отображается с использованием шаблона Blade `resources/views/profile/logout-other-browser-sessions-form.blade.php`. При использовании стека Inertia это представление отображается с использованием шаблона `resources/js/Pages/Profile/LogoutOtherBrowserSessionsForm.vue`.
 
-This feature utilizes Laravel's built-in `AuthenticateSession` middleware to safely logout other browser sessions that are authenticated as the current user.
+Эта функция использует встроенное в Laravel промежуточное программное обеспечение `AuthenticateSession` для безопасного выхода из других сеансов браузера, которые аутентифицированы как текущий пользователь.
 
-## Actions
+## Действия
 
-As typical of most Jetstream features, the logic executed to satisfy security related requests can be found within action classes within your application. However, only the password update action is customizable. Generally, the two-factor authentication and browser sessions actions should remain encapsulated within Jetstream and should not require customization.
+Как типично для большинства функций Jetstream, логика, выполняемая для удовлетворения запросов, связанных с безопасностью, может быть найдена в классах действий в Вашем приложении. Однако настраивается только действие обновления пароля. Как правило, действия двухфакторной аутентификации и сеанса браузера должны оставаться инкапсулированными в Jetstream и не требовать настройки.
 
-### Password Update
+### Обновление пароля
 
-The `App\Actions\Fortify\UpdateUserPassword` class will be invoked when the user updates their password. This action is responsible for validating the input and updating the user's password.
+Класс `App\Actions\Fortify\UpdateUserPassword` будет вызываться, когда пользователь обновит свой пароль. Это действие отвечает за проверку ввода и обновление пароля пользователя.
 
-This action utilizes the `App\Actions\Fortify\PasswordValidationRules` trait to determine the validation rules that will be applied to the password. Customizing this trait will uniformly affect the validation rules applied to the password when the user registers, resets their password, or updates their password.
+Это действие использует трейт `App\Actions\Fortify\PasswordValidationRules` для определения правил проверки, которые будут применяться к паролю. Настройка этого свойства будет одинаково влиять на правила проверки, применяемые к паролю, когда пользователь регистрируется, сбрасывает свой пароль или обновляет свой пароль.
 
-### Password Validation Rules
+### Правила проверки пароля
 
-As you may have noticed, the `App\Actions\Fortify\PasswordValidationRules` trait utilizes a custom `Laravel\Fortify\Rules\Password` validation rule object. This object allows you to easily customize the password requirements for your application. By default, the rule requires a password that is at least 8 characters in length. However, you may use the following methods to customize the password's requirements:
+Как Вы могли заметить, трейт `App\Actions\Fortify\PasswordValidationRules` использует настраиваемый объект правила проверки `Laravel\Fortify\Rules\Password`. Этот объект позволяет Вам легко настроить требования к паролю для Вашего приложения. По умолчанию для правила требуется пароль длиной не менее 8 символов. Однако Вы можете использовать следующие методы для настройки требований к паролю:
 
 ```php
 (new Password)->length(10)
 
-// Require at least one uppercase character...
+// Требуется хотя бы один символ верхнего регистра...
 (new Password)->requireUppercase()
 
-// Require at least one numeric character...
+// Требуется хотя бы один числовой символ...
 (new Password)->requireNumeric()
 ```
 
-## Password Confirmation
+## Подтверждение пароля
 
-While building your application, you may occasionally have actions that should require the user to confirm their password before the action is performed. Thankfully, Jetstream has built-in functionality to make this a breeze.
+При создании приложения Вы можете иногда выполнять действия, требующие от пользователя подтверждения пароля перед выполнением действия. К счастью, в Jetstream есть встроенная функциональность, которая упрощает эту задачу.
 
 ### Livewire
 
-If you are using the Livewire stack, your Livewire component that contains the password confirmed action should use the `Laravel\Jetstream\ConfirmsPasswords` trait. Next, you should wrap the action you wish to confirm using the `confirms-password` Blade component. `confirms-password` wrapper should contain `wire:then` directive that specifies which Livewire action should be run once the user's password has been confirmed. Once the user has confirmed their password, they will not be required to re-enter until the number of seconds defined by the `auth.password_timeout` configuration option have elapsed:
+Если Вы используете стек Livewire, Ваш компонент Livewire, содержащий действие с подтвержденным паролем, должен использовать трейт `Laravel\Jetstream\ConfirmsPasswords`. Затем Вы должны заключить действие, которое Вы хотите подтвердить, с помощью блейд-компонента `confirms-password`. Оболочка `confirms-password` должна содержать директиву `wire:then`, которая указывает, какое действие Livewire должно выполняться после подтверждения пароля пользователя. После того, как пользователь подтвердит свой пароль, ему не потребуется повторно вводить пароль до тех пор, пока не истечет количество секунд, определенное параметром конфигурации `auth.password_timeout`:
 
 ```html
 <x-jet-confirms-password wire:then="enableAdminMode">
@@ -72,11 +72,11 @@ If you are using the Livewire stack, your Livewire component that contains the p
 </x-jet-confirms-password>
 ```
 
-Next, within your Livewire action that is being confirmed, you should call the `ensurePasswordIsConfirmed` method. This should be done at the very beginning of the relevant action method:
+Затем в рамках Вашего действия Livewire, которое подтверждается, Вы должны вызвать метод `ensurePasswordIsConfirmed`. Делать это нужно в самом начале соответствующего метода действий:
 
 ```php
 /**
- * Enable administration mode for user.
+ * Включить режим администрирования для пользователя.
  *
  * @return void
  */
@@ -90,7 +90,7 @@ public function enableAdminMode()
 
 ### Inertia
 
-If you are using the Inertia stack, you should wrap the action you wish to confirm using the `ConfirmsPassword` Vue component provided by Jetstream. This wrapper component should listen for the `@confirmed` event in order to trigger the method that should be called once the user's password is confirmed. Once the user has confirmed their password, they will not be required to re-enter until the number of seconds defined by the `auth.password_timeout` configuration option have elapsed:
+Если Вы используете стек Inertia, Вам следует обернуть действие, которое Вы хотите подтвердить, с помощью компонента Vue `ConfirmsPassword`, предоставляемого Jetstream. Этот компонент-оболочка должен прослушивать событие `@confirmed`, чтобы запустить метод, который должен вызываться после подтверждения пароля пользователя. После того, как пользователь подтвердит свой пароль, ему не потребуется повторно вводить пароль до тех пор, пока не истечет количество секунд, определенное параметром конфигурации `auth.password_timeout`:
 
 ```js
 import JetConfirmsPassword from './Jetstream/ConfirmsPassword'
@@ -103,7 +103,7 @@ export default {
 }
 ```
 
-Next, wrap the component around the element that triggers the action that should be confirmed:
+Затем оберните компонент вокруг элемента, запускающего действие, которое необходимо подтвердить:
 
 ```html
 <jet-confirms-password @confirmed="enableAdminMode">
@@ -113,7 +113,7 @@ Next, wrap the component around the element that triggers the action that should
 </jet-confirms-password>
 ```
 
-Finally, you should ensure that the route that performs the confirmed action is assigned the `password.confirm` middleware. This middleware is included with the default installation of Laravel:
+Наконец, Вы должны убедиться, что маршруту, который выполняет подтвержденное действие, назначено промежуточное программное обеспечение `password.confirm`. Это промежуточное ПО включено в стандартную установку Laravel:
 
 ```php
 Route::post('/admin-mode', function () {
@@ -121,9 +121,9 @@ Route::post('/admin-mode', function () {
 })->middleware(['password.confirm']);
 ```
 
-### Customizing How Passwords Are Confirmed
+### Настройка способа подтверждения паролей
 
-Sometimes, you may wish to customize how the user's password is validated during confirmation. To do so, you may use the `Fortify::confirmPasswordsUsing` method. This method accepts a Closure which receives the authenticated user instance and the `password` input value of the request. The Closure should return `true` if the password is valid for the given user. Typically, this method should be called from the `boot` method of your `JetstreamServiceProvider`:
+Иногда Вам может потребоваться настроить способ проверки пароля пользователя во время подтверждения. Для этого Вы можете использовать метод `Fortify::confirmPasswordsUsing`. Этот метод принимает Замыкание, которое получает аутентифицированный пользовательский экземпляр и входное значение запроса `password`. Замыкание должно вернуть `true`, если пароль действителен для данного пользователя. Обычно этот метод следует вызывать из метода `boot` Вашего `JetstreamServiceProvider`:
 
 ```php
 use Illuminate\Support\Facades\Hash;

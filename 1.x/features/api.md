@@ -2,22 +2,22 @@
 
 [[toc]]
 
-## Introduction
+## Вступление
 
-Jetstream includes first-party integration with [Laravel Sanctum](https://laravel.com/docs/sanctum). Laravel Sanctum provides a featherweight authentication system for SPAs (single page applications), mobile applications, and simple, token based APIs. Sanctum allows each user of your application to generate multiple API tokens for their account. These tokens may be granted abilities / permissions which specify which actions the tokens are allowed to perform.
+Jetstream включает встроенную интеграцию с [Laravel Sanctum](https://laravel.com/docs/sanctum). Laravel Sanctum предоставляет легкую систему аутентификации для SPA (одностраничных приложений), мобильных приложений и простых API на основе токенов. Sanctum позволяет каждому пользователю Вашего приложения создавать несколько токенов API для своей учетной записи. Этим токенам могут быть предоставлены возможности / разрешения, которые определяют, какие действия токенам разрешено выполнять.
 
-![Screenshot of Laravel Jetstream API](./../../assets/img/api.png)
+![Скриншот Laravel Jetstream API](./../../assets/img/api.png)
 
-By default, the API token creation panel may be accessed using the "API" link of the top-right user profile dropdown menu. From this screen, users may create Sanctum API tokens that have various permissions.
+По умолчанию к панели создания токенов API можно получить доступ, используя ссылку «API» в раскрывающемся меню профиля пользователя в правом верхнем углу. На этом экране пользователи могут создавать токены Sanctum API с различными разрешениями.
 
-:::tip Sanctum Documentation
+:::tip Документация Sanctum
 
-For more information on Sanctum and to learn how to issue requests to a Sanctum authenticated API, please consult the official [Sanctum documentation](https://laravel.com/docs/sanctum).
+Для получения дополнительной информации о Sanctum и о том, как отправлять запросы к API с аутентификацией Sanctum, обратитесь к официальной [документации Sanctum](https://laravel.com/docs/sanctum).
 :::
 
-## Enabling API Support
+## Включение поддержки API
 
-If your application will be offering an API to third-parties, you must enable Jetstream's API feature. To do so, you should uncomment the relevant entry in the `features` configuration option of the `config/jetstream.php` configuration file:
+Если Ваше приложение будет предлагать API третьим лицам, Вы должны включить функцию API Jetstream. Для этого раскомментируйте соответствующую запись в опции конфигурации `features` конфигурационного файла `config/jetstream.php`:
 
 ```php
 'features' => [
@@ -27,9 +27,9 @@ If your application will be offering an API to third-parties, you must enable Je
 ],
 ```
 
-## Defining Permissions
+## Определение разрешений
 
-The permissions available to API tokens are defined using the `Jetstream::permissions` method within your application's `JetstreamServiceProvider`. Permissions are just simple strings. Once they have been defined they may be assigned to an API token:
+Разрешения, доступные для токенов API, определяются с помощью метода `Jetstream::permissions` в объекте `JetstreamServiceProvider` Вашего приложения. Разрешения - это простые строки. Как только они будут определены, они могут быть назначены токену API:
 
 ```php
 Jetstream::defaultApiTokenPermissions(['read']);
@@ -42,18 +42,18 @@ Jetstream::permissions([
 ]);
 ```
 
-The `defaultApiTokenPermissions` method may be used to specify which permissions should be selected by default when creating a new API token. Of course, a user may uncheck a default permission before creating the token.
+Метод `defaultApiTokenPermissions` может использоваться для указания, какие разрешения должны быть выбраны по умолчанию при создании нового токена API. Конечно, пользователь может снять отметку с разрешения по умолчанию перед созданием токена.
 
-## Authorizing Incoming Requests
+## Авторизация входящих запросов
 
-Every request made to your Jetstream application, even to authenticated routes within your `routes/web.php` file, will be associated with a Sanctum token object. You may determine if the associated token has a given permission using the `tokenCan` method provided by the `Laravel\Sanctum\HasApiTokens` trait. This trait is automatically applied to your application's `App\Models\User` model during Jetstream's installation:
+Каждый запрос, сделанный к Вашему приложению Jetstream, даже к аутентифицированным маршрутам в Вашем файле `routes/web.php`, будет связан с объектом токена Sanctum. Вы можете определить, имеет ли связанный токен данное разрешение, используя метод `tokenCan`, предоставляемый трейтом `Laravel\Sanctum\HasApiTokens`. Этот трейт автоматически применяется к модели Вашего приложения `App\Models\User` во время установки Jetstream:
 
 ```php
 $request->user()->tokenCan('read');
 ```
 
-#### First-Party UI Initiated Requests
+#### Запросы, инициированные пользовательским интерфейсом
 
-When a user makes a request to a route within your `routes/web.php` file, the request will typically be authenticated by Sanctum through a cookie based `web` guard. Since the user is making a first-party request through the application UI in this scenario, the `tokenCan` method will always return `true`.
+Когда пользователь делает запрос к маршруту в вашем файле `routes/web.php`, запрос обычно аутентифицируется Sanctum с помощью веб-защиты `web` на основе файлов куки. Так как в этом сценарии пользователь выполняет первичный запрос через пользовательский интерфейс приложения, метод `tokenCan` всегда будет возвращать `true`.
 
-At first, this behavior may seem strange; however, it is convenient to be able to always assume an API token is available and can be inspected via the `tokenCan` method. This means that within your application's authorizations policies you may always call this method without fear that there is no token associated with the request.
+Поначалу такое поведение может показаться странным; однако удобно всегда предполагать, что токен API доступен и может быть проверен с помощью метода `tokenCan`. Это означает, что в рамках политик авторизации Вашего приложения Вы всегда можете вызвать этот метод, не опасаясь, что с запросом не связан токен.
