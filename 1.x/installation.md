@@ -1,16 +1,16 @@
-# Installation
+# Установка
 
 [[toc]]
 
-## Installing Jetstream
+## Установка Jetstream
 
-If you have installed the [Laravel Installer](https://laravel.com/docs/installation#installing-laravel), you may use the `--jet` option to create a new Jetstream powered Laravel application:
+Если вы установили [Установщик Laravel](https://laravel.com/docs/installation#installing-laravel), вы можете использовать параметр `--jet` для создания нового приложения Laravel на базе Jetstream:
 
 ```bash
 laravel new project-name --jet
 ```
 
-After installing Jetstream via the Laravel Installer, you should migrate your database:
+После установки Jetstream через установщик Laravel Вы должны запустить миграцию базы данных:
 
 ```bash
 php artisan migrate
@@ -21,31 +21,31 @@ php artisan migrate
 Jetstream is only meant to be installed on **new** Laravel projects. You should not attempt to migrate an existing project to Jetstream.
 :::
 
-### Composer Installation
+### Установка с помощью Composer
 
-Alternatively, you may use Composer to install Jetstream into your new Laravel project:
+В качестве альтернативы Вы можете использовать Composer для установки Jetstream в свой новый проект Laravel:
 
 ```bash
 composer require laravel/jetstream
 ```
 
-If you choose to install Jetstream through Composer, you should run the `jetstream:install` Artisan command. This command accepts the name of the stack you prefer (livewire or inertia). You are highly encouraged to read through the entire documentation of [Livewire](https://laravel-livewire.com) or [Inertia](https://inertiajs.com) before beginning your Jetstream project. In addition, you may use the `--teams` switch to enable team support:
+Если Вы выбрали установку Jetstream через Composer, Вы должны запустить Artisan-команду `jetstream:install`. Эта команда принимает имя стека, которое Вы предпочитаете (livewire или inertia). Мы настоятельно рекомендуем Вам прочитать всю документацию [Livewire](https://laravel-livewire.com) или [Inertia](https://inertiajs.com) или [перевод официальной документации Inertia](https://inertiajs.ru) перед тем, как начать свой проект Jetstream. Кроме того, Вы можете использовать параметр `--teams` для включения поддержки команды:
 
-#### Install Jetstream With Livewire
+#### Установка Jetstream с Livewire
 
 ```bash
 php artisan jetstream:install livewire --teams
 ```
 
-#### Or, Install Jetstream With Inertia
+#### Или, Установка Jetstream с Inertia
 
 ```bash
 php artisan jetstream:install inertia --teams
 ```
 
-#### Finalizing The Installation
+#### Завершение установки
 
-After installing Jetstream, you should install and build your NPM dependencies and migrate your database:
+После установки Jetstream следует установить и построить зависимости NPM и перенести базу данных:
 
 ```bash
 npm install && npm run dev
@@ -53,27 +53,27 @@ npm install && npm run dev
 php artisan migrate
 ```
 
-## Jetstream Structure
+## Структура Jetstream
 
-### Views / Pages
+### Представления / Страницы
 
-During installation, Jetstream will publish a variety of views and classes to your application. When using Livewire, views will be published to your `resources/views` directory. When using Inertia, "Pages" will be published to your `resources/js/Pages` directory. These views / pages contain every feature supported by Jetstream and you are free to customize them as needed. Think of Jetstream as a starting point for your application. Once you have installed Jetstream, you are free to customize anything you like.
+Во время установки Jetstream опубликует различные представления и классы для Вашего приложения. При использовании Livewire просмотры будут публиковаться в Вашем каталоге `resources/views`. При использовании Inertia «Страницы» будут опубликованы в Вашем каталоге `resources/js/Pages`. Эти представления / страницы содержат все функции, поддерживаемые Jetstream, и Вы можете настроить их по своему усмотрению. Считайте Jetstream отправной точкой для Вашего приложения. После того, как Вы установили Jetstream, Вы можете настроить все, что захотите.
 
-#### Dashboard
+#### Панель
 
-The "main" view of your application is published at `resources/views/dashboard.blade.php` when using Livewire and `resources/js/Pages/Dashboard.vue` when using Inertia. You are free to use this as a starting point for building the primary view of your application.
+«Главное» представление Вашего приложения будет опубликовано в `resources/views/dashboard.blade.php` при использовании Livewire и `resources/js/Pages/Dashboard.vue` при использовании Inertia. Вы можете использовать это как отправную точку для построения основного представления Вашего приложения.
 
-### Actions
+### Действия
 
-In addition, "action" classes are published to your application's `app/Actions` directory. These action classes typically perform a single action and correspond to a single Jetstream feature, such as creating a team or deleting a user. You are free to customize these classes if you would like to tweak the backend behavior of Jetstream.
+Кроме того, классы "action" публикуются в каталоге `app/Actions` Вашего приложения. Эти классы действий обычно выполняют одно действие и соответствуют одной функции Jetstream, такой как создание группы или удаление пользователя. Вы можете настроить эти классы, если хотите настроить внутреннее поведение Jetstream.
 
 ### Tailwind
 
-During installation, Jetstream will scaffold your application's integration with the Tailwind CSS framework. Specifically, a `webpack.mix.js` file and `tailwind.config.js` file will be created. These two files are used to build your compiled application CSS output. You are free to modify these files as needed for your application.
+Во время установки Jetstream обеспечит интеграцию Вашего приложения с фреймворком Tailwind CSS. В частности, будут созданы файлы `webpack.mix.js` и `tailwind.config.js`. Эти два файла используются для создания вывода CSS скомпилированного приложения. Вы можете изменять эти файлы по мере необходимости для своего приложения.
 
-In addition, your `tailwind.config.js` file has been pre-configured to support PurgeCSS with the relevant directories properly specified depending on your chosen Jetstream stack.
+Кроме того, Ваш файл `tailwind.config.js` был предварительно настроен для поддержки PurgeCSS с соответствующими каталогами, правильно указанными в зависимости от выбранного Вами стека Jetstream.
 
-Your application's `package.json` file is already scaffolded with NPM commands that you may use to compile your assets:
+Файл `package.json` Вашего приложения уже создан с помощью команд NPM, которые Вы можете использовать для компиляции Ваших ресурсов:
 
 ```bash
 npm run dev
@@ -83,37 +83,37 @@ npm run prod
 npm run watch
 ```
 
-### Livewire Components
+### Компоненты Livewire
 
-Jetstream uses a variety of Blade components, such as buttons and modals, to power the Livewire stack. If you are using the Livewire stack and you would like to publish these components after installing Jetstream, you may use the `vendor:publish` Artisan command:
+Jetstream использует различные компоненты Blade, такие как кнопки и модальные окна, для стека Livewire. Если Вы используете стек Livewire и хотите опубликовать эти компоненты после установки Jetstream, Вы можете использовать Artisan-команду `vendor: publish`:
 
 ```bash
 php artisan vendor:publish --tag=jetstream-views
 ```
 
-## Application Logo
+## Логотип приложения
 
-As you may have noticed, the Jetstream logo is utilized on Jetstream's authentication pages as well as the top navigation bar. You may easily customize the logo by modifying two Jetstream components.
+Как Вы могли заметить, логотип Jetstream используется на страницах аутентификации Jetstream, а также на верхней панели навигации. Вы можете легко настроить логотип, изменив два компонента Jetstream.
 
 ### Livewire
 
-If you are using the Livewire stack, you should first publish the Livewire stack's Blade components:
+Если Вы используете стек Livewire, Вы должны сначала опубликовать компоненты Blade стека Livewire:
 
 ```bash
 php artisan vendor:publish --tag=jetstream-views
 ```
 
-Next, you should customize the SVGs located in the `resources/views/vendor/jetstream/components/application-logo.blade.php`, `resources/views/vendor/jetstream/components/authentication-card-logo.blade.php`, and `resources/views/vendor/jetstream/components/application-mark.blade.php` components.
+Затем Вы должны настроить SVG, расположенные компоненты в файлах `resources/views/vendor/jetstream/components/application-logo.blade.php`, `resources/views/vendor/jetstream/components/authentication-card-logo.blade.php` и `resources/views/vendor/jetstream/components/application-mark.blade.php`.
 
 ### Inertia
 
-If you are using the Inertia stack, you should first publish Jetstream's Blade components. These components are used by the authentication templates:
+Если Вы используете стек Inertia, Вы должны сначала опубликовать компоненты Blade Jetstream. Эти компоненты используются шаблонами аутентификации:
 
 ```bash
 php artisan vendor:publish --tag=jetstream-views
 ```
 
-Next, you should customize the SVGs located in `resources/views/vendor/jetstream/components/authentication-card-logo.blade.php`, `resources/js/Jetstream/ApplicationLogo.vue`, and `resources/js/Jetstream/ApplicationMark.vue`. After customizing these components, you should rebuild your assets:
+Затем вы должны настроить SVG, расположенные в `resources/views/vendor/jetstream/components/authentication-card-logo.blade.php`, `resources/js/Jetstream/ApplicationLogo.vue` и `resources/js/Jetstream/ApplicationMark.vue`. После настройки этих компонентов Вы должны перестроить свои ресурсы:
 
 ```bash
 npm run dev
