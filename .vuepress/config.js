@@ -1,26 +1,33 @@
 module.exports = {
     title: "Laravel Jetstream",
-    description: "Beautifully designed application scaffolding for Laravel",
+    description: "Красиво оформленный каркас приложений для Laravel",
     base: '/',
 
     head: require('./head'),
+
+    locales: {
+        '/': {
+            lang: 'ru',
+        },
+    },
 
     themeConfig: {
         logo: '/assets/img/logo.svg',
         displayAllHeaders: true,
         activeHeaderLinks: false,
-        searchPlaceholder: 'Press / to search',
+        searchPlaceholder: 'Нажмите / для поиска',
         lastUpdated: false, // string | boolean
         sidebarDepth: 1,
 
         repo: 'laravel/jetstream',
 
-        docsRepo: 'laravel/jetstream-docs',
+        docsRepo: 'laravel-ru/jetstream-docs',
+        docsBranch: 'main-ru',
         editLinks: true,
-        editLinkText: 'Help us improve this page!',
+        editLinkText: 'Помогите нам улучшить эту страницу!',
 
         nav: [
-            { text: 'Home', link: '/', target: '_self' },
+            { text: 'Главная', link: '/', target: '_self' },
         ],
 
         sidebar: {
