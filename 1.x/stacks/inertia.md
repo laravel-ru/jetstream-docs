@@ -2,20 +2,20 @@
 
 [[toc]]
 
-## Introduction
+## Вступление
 
-The Inertia.js stack provided by Jetstream uses [Vue.js](https://vuejs.org) as its templating language. Building an Inertia application is a lot like building a typical Vue application; however, you will use Laravel's router instead of Vue router. Inertia is a small library that allows you to render single-file Vue components from your Laravel backend by providing the name of the component and the data that should be hydrated into that component's "props".
+Стек Inertia.js, предоставляемый Jetstream, использует [Vue.js](https://vuejs.org) в качестве языка шаблонов. Создание приложения Inertia очень похоже на создание типичного приложения Vue; однако Вы будете использовать маршрутизатор Laravel вместо маршрутизатора Vue. Inertia - это небольшая библиотека, которая позволяет Вам отображать однофайловые компоненты Vue из Вашего бэкэнда Laravel, предоставляя имя компонента и данные, которые должны быть перенесены в «свойства» этого компонента.
 
-In other words, this stack gives you the full power of Vue.js without the complexity of client-side routing. You get to use the standard Laravel router that you are used to. The Inertia stack is a great choice if you are comfortable with and enjoy using Vue.js as your templating language.
+Другими словами, этот стек дает Вам всю мощь Vue.js без сложной маршрутизации на стороне клиента. Вы можете использовать стандартный маршрутизатор Laravel, к которому Вы привыкли. Стек Inertia - отличный выбор, если Вам комфортно и нравится использовать Vue.js в качестве языка шаблонов.
 
-When using Inertia, your application's routes will respond by rendering an Inertia "page". This looks very similar to returning a Laravel Blade view:
+При использовании Inertia маршруты Вашего приложения будут отображать "страницу" Inertia. Это очень похоже на возвращение представления Laravel Blade:
 
 ```php
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 /**
- * Show the general profile settings screen.
+ * Показать экран общих настроек профиля.
  *
  * @param  \Illuminate\Http\Request  $request
  * @return \Inertia\Response
@@ -28,24 +28,24 @@ public function show(Request $request)
 }
 ```
 
-When using the Inertia stack, Jetstream has some unique features that you should be aware of. We will discuss each of these features below.
+При использовании стека Inertia Jetstream обладает некоторыми уникальными функциями, о которых Вам следует знать. Мы обсудим каждую из этих функций ниже.
 
-:::tip Inertia Documentation
+:::tip Документация Inertia
 
-Before using the Inertia stack, you are strongly encouraged to review the entire [Inertia documentation](https://inertiajs.com)
+Перед использованием стека Inertia настоятельно рекомендуется просмотреть всю [документацию Inertia](https://inertiajs.com) или [перевод официальной документации Inertia](https://inertiajs.ru)
 :::
 
-## Components
+## Компоненты
 
-While building the Jetstream Inertia stack, a variety of Vue components (buttons, panels, inputs, modals) were created to assist in creating UI consistency and ease of use. You are free to use or not use these components. All of these components are located within your application's `resources/js/Jetstream` directory.
+При создании стека Jetstream Inertia были созданы различные компоненты Vue (кнопки, панели, входы, модальные окна), чтобы помочь в обеспечении согласованности и простоты использования пользовательского интерфейса. Вы можете использовать или не использовать эти компоненты. Все эти компоненты находятся в каталоге Вашего приложения `resources/js/Jetstream`.
 
-You may gain insight into how to use these components by reviewing their usage within Jetstream's existing pages located within your `resources/js/Pages` directory.
+Вы можете получить представление о том, как использовать эти компоненты, просмотрев их использование на существующих страницах Jetstream, расположенных в Вашем каталоге `resources/js/Pages`.
 
-## Custom Rendering
+## Пользовательский рендеринг
 
-Some of Jetstream's Inertia pages, such as `Teams/Show` and `Profile/Show` are rendered from within Jetstream itself. However, you may need to pass additional data to these pages while building your application. Therefore, Jetstream allows you to customize the data / props passed to these pages using the `Jetstream::inertia()->whenRendering` method.
+Некоторые страницы Inertia в Jetstream, такие как `Teams/Show` и `Profile/Show`, отображаются внутри самого Jetstream. Однако Вам может потребоваться передать на эти страницы дополнительные данные при создании приложения. Следовательно, Jetstream позволяет настраивать данные / свойства, передаваемые на эти страницы, с помощью метода `Jetstream::inertia()->whenRendering`.
 
-This method accepts the name of the page you wish to customize and a Closure. The Closure will receive the incoming HTTP request and an array of the default data that would typically be sent to the page. You are welcome to customize or add new array elements to the data as necessary. Typically, you should call this method from within the `boot` method of your `JetstreamServiceProvider`:
+Этот метод принимает имя страницы, которую Вы хотите настроить и Замыкание. Замыкание получит входящий HTTP-запрос и массив данных по умолчанию, которые обычно отправляются на страницу. Вы можете при необходимости настроить или добавить новые элементы массива к данным. Обычно Вы должны вызывать этот метод из метода `boot` Вашего `JetstreamServiceProvider`:
 
 ```php
 use Illuminate\Http\Request;
@@ -55,17 +55,18 @@ Jetstream::inertia()->whenRendering(
     'Profile/Show',
     function (Request $request, array $data) {
         return array_merge($data, [
-            // Custom data...
+            // Пользовательские данные...
         ]);
     }
 );
 ```
 
-## Form / Validation Helpers
+## Форма / Помощники с валидацией
 
-In order to make working with forms and validation errors more convenient, a [laravel-jetstream](https://github.com/laravel/jetstream-js) NPM package has been created. This package is automatically installed when using the Jetstream Inertia stack.
+Чтобы сделать работу с формами и ошибками валидации более удобной, был создан NPM-пакет [laravel-jetstream](https://github.com/laravel/jetstream-js). Этот пакет устанавливается автоматически при использовании стека Jetstream Inertia.
 
-This package adds a new `form` method to the `$inertia` object that may be accessed via your Vue components. The `form` method is used to create a new form object that will provide easy access to error messages, as well as conveniences such as resetting the form state on a successful form submission:
+Этот пакет добавляет новый метод `form` к объекту `$inertia`, к которому можно получить доступ через Ваши компоненты Vue. Метод `form` используется для создания нового объекта формы, который обеспечит легкий доступ к сообщениям об ошибках, а также к таким удобствам, как сброс состояния формы при успешной отправке формы:
+
 
 ```js
 data() {
@@ -81,7 +82,7 @@ data() {
 }
 ```
 
-A form may be submitted using the `post`, `put`, or `delete` methods. All of the data specified during the form's creation will be automatically included in the request. In addition, [Inertia request options](https://inertiajs.com/requests) may also be specified:
+Форма может быть отправлена с использованием методов `post`, `put` или `delete`. Все данные, указанные при создании формы, будут автоматически включены в запрос. Кроме того, можно указать [Параметры запроса инерции](https://inertiajs.com/requests) или [перевод параметров запроса инерции](https://inertiajs.ru/requests):
 
 ```js
 this.form.post('/user/profile-information', {
@@ -89,13 +90,13 @@ this.form.post('/user/profile-information', {
 })
 ```
 
-Form error messages may be accessed using the `form.error` method. This method will return the first available error message for the given field:
+К сообщениям об ошибках формы можно получить доступ, используя метод `form.error`. Этот метод вернет первое доступное сообщение об ошибке для данного поля:
 
 ```html
 <jet-input-error :message="form.error('email')" class="mt-2" />
 ```
 
-A flattened list of all validation errors may be accessed using the `errors` method. This method may prove useful when attempting to display the error message in a simple list:
+Сглаженный список всех ошибок проверки можно получить с помощью метода `errors`. Этот метод может оказаться полезным при попытке отобразить сообщение об ошибке в виде простого списка:
 
 ```html
 <li v-for="error in form.errors()">
@@ -103,46 +104,46 @@ A flattened list of all validation errors may be accessed using the `errors` met
 </li>
 ```
 
-Additional information about the form's current state is available via the `recentlySuccessful` and `processing` methods. These methods are helpful for dictating disabled or "in progress" UI states:
+Дополнительная информация о текущем состоянии формы доступна через методы `recentlySuccessful` и `processing`. Эти методы полезны для того, чтобы диктовать отключенные или "выполняющиеся" состояния пользовательского интерфейса:
 
 ```html
 <jet-action-message :on="form.recentlySuccessful" class="mr-3">
-    Saved.
+    Сохранено.
 </jet-action-message>
 
 <jet-button :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-    Save
+    Сохранить
 </jet-button>
 ```
 
-To learn more about using Jetstream's Inertia form helpers, you are free to review the Inertia pages created during Jetstream's installation. These pages are located within your application's `resources/js/Pages` directory.
+Чтобы узнать больше об использовании помощников форм Jetstream Inertia, Вы можете просмотреть страницы Inertia, созданные во время установки Jetstream. Эти страницы находятся в каталоге Вашего приложения `resources/js/Pages`.
 
-## Modals
+## Модальные
 
-Jetstream's Inertia stack also includes two modal components: `DialogModal` and `ConfirmationModal`. The `ConfirmationModal` may be used when confirming destructive actions such as deletions, while the `DialogModal` is a more generic modal window that may be used at any time.
+Стек Inertia в Jetstream также включает два модальных компонента: `DialogModal` и `ConfirmationModal`. `ConfirmationModal` может использоваться при подтверждении деструктивных действий, таких как удаления, в то время как `DialogModal` - это более общее модальное окно, которое можно использовать в любое время.
 
-To illustrate the use of modals, consider the following modal that confirms a user would like to delete their account:
+Чтобы проиллюстрировать использование модальных окон, рассмотрим следующее модальное окно, которое подтверждает, что пользователь желает удалить свою учетную запись:
 
 ```html
 <jet-confirmation-modal :show="confirmingUserDeletion" @close="confirmingUserDeletion = false">
     <template #title>
-        Delete Account
+        Удалить аккаунт
     </template>
 
     <template #content>
-        Are you sure you want to delete your account? Once your account is deleted, all of its resources and data will be permanently deleted.
+        Вы уверены, что хотите удалить свою учетную запись? После удаления Вашей учетной записи все ее ресурсы и данные будут удалены без возможности восстановления.
     </template>
 
     <template #footer>
         <jet-secondary-button @click.native="confirmingUserDeletion = false">
-            Nevermind
+            Ничего
         </jet-secondary-button>
 
         <jet-danger-button class="ml-2" @click.native="deleteTeam" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-            Delete Account
+            Удалить аккаунт
         </jet-danger-button>
     </template>
 </jet-confirmation-modal>
 ```
 
-As you can see, the modal's open / close state is determined by a `show` property that is declared on the component. The modal's contents may be specified by hydrating three slots: `title`, `content`, and `footer`.
+Как видите, состояние открытия / закрытия модального окна определяется свойством `show`, которое объявлено в компоненте. Содержимое модального окна может быть определено путем гидратации трех слотов: `title`, `content` и `footer`.

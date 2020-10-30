@@ -2,3 +2,4 @@
 .DS_Store
 .idea
 /.vuepress/dist
+/_gh_pages
