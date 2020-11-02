@@ -1,38 +1,38 @@
-## Formatting Examples
+## Примеры форматирования
 
-::: tip Did you know?
-Laravel now offers Horizon, a beautiful dashboard and configuration system for your Redis powered queues. Check out the full [Horizon documentation](/docs/{{version}}/horizon) for more information.
+::: tip Знаете ли Вы, что?
+Laravel теперь предлагает Horizon, красивую панель управления и систему конфигурации для ваших очередей с поддержкой Redis. Ознакомьтесь с полной [документацией Horizon](/docs/{{version}}/horizon) для дополнительной информации.
 :::
 
-::: warning Something to keep in mind
-Laravel now offers Horizon, a beautiful dashboard and configuration system for your Redis powered queues. Check out the full [Horizon documentation](/docs/{{version}}/horizon) for more information.
+::: warning Что-то, что нужно помнить
+Laravel теперь предлагает Horizon, красивую панель управления и систему конфигурации для ваших очередей с поддержкой Redis. Ознакомьтесь с полной [документацией Horizon](/docs/{{version}}/horizon) для дополнительной информации.
 :::
 
-::: danger Be Careful!
-Laravel now offers Horizon, a beautiful dashboard and configuration system for your Redis powered queues. Check out the full [Horizon documentation](/docs/{{version}}/horizon) for more information.
+::: danger Будьте осторожны!
+Laravel теперь предлагает Horizon, красивую панель управления и систему конфигурации для ваших очередей с поддержкой Redis. Ознакомьтесь с полной [документацией Horizon](/docs/{{version}}/horizon) для дополнительной информации.
 :::
 
-Laravel queues provide a unified API across a variety of different queue backends, such as Beanstalk, Amazon SQS, Redis, or even a relational database. Queues allow you to defer the processing of a time consuming task, such as sending an email, until a later time. Deferring these time consuming tasks drastically speeds up web requests to your application.
+Очереди Laravel предоставляют унифицированный API для множества различных очередей, таких как Beanstalk, Amazon SQS, Redis или даже для реляционной базы данных. Очереди позволяют отложить обработку трудоемкой задачи, такой как отправка электронного письма, на более позднее время. Откладывание этих трудоемких задач резко ускоряет веб-запросы к Вашему приложению.
 
-The queue configuration file is stored in `config/queue.php`. In this file you will find connection configurations for each of the queue drivers that are included with the framework, which includes a database, [Beanstalkd](https://kr.github.io/beanstalkd/), [Amazon SQS](https://aws.amazon.com/sqs/), [Redis](https://redis.io), and a synchronous driver that will execute jobs immediately (for local use). A `null` queue driver is also included which discards queued jobs.
+Файл конфигурации очереди хранится в `config/queue.php`. В этом файле вы найдете конфигурации подключения для каждого из драйверов очереди, включенных в структуру, которая включает базу данных, [Beanstalkd](https://kr.github.io/beanstalkd/), [Amazon SQS](https://aws.amazon.com/sqs/), [Redis](https://redis.io) и синхронный драйвер, который немедленно выполняет задания (для локального использования). Также включен драйвер очереди `null`, который отбрасывает задания в очереди.
 
-### Sub Sub Section
+### Подраздел
 
-Before getting started with Laravel queues, it is important to understand the distinction between "connections" and "queues". In your `config/queue.php` configuration file, there is a `connections` configuration option. This option defines a particular connection to a backend service such as Amazon SQS, Beanstalk, or Redis. However, any given queue connection may have multiple "queues" which may be thought of as different stacks or piles of queued jobs.
+Прежде чем приступить к работе с очередями Laravel, важно понять различие между «connections» и «queues». В Вашем конфигурационном файле `config/queue.php` есть опция конфигурации `connections`. Этот параметр определяет конкретное соединение с серверной службой, такой как Amazon SQS, Beanstalk или Redis. Однако любое данное соединение очереди может иметь несколько «queues», которые могут рассматриваться как различные стеки или груды поставленных в очередь заданий.
 
-Note that each connection configuration example in the `queue` configuration file contains a `queue` attribute. This is the default queue that jobs will be dispatched to when they are sent to a given connection. In other words, if you dispatch a job without explicitly defining which queue it should be dispatched to, the job will be placed on the queue that is defined in the `queue` attribute of the connection configuration:
+Обратите внимание, что каждый пример конфигурации соединения в файле конфигурации `queue` содержит атрибут `queue`. Это очередь по умолчанию, в которую будут отправляться задания при их отправке в определенное соединение. Другими словами, если Вы отправляете задание без явного определения очереди, в которую оно должно быть отправлено, задание будет помещено в очередь, которая определена в атрибуте `queue` конфигурации соединения:
 
 ```php
-// This job is sent to the default queue...
+// Это задание отправляется в очередь по умолчанию...
 Job::dispatch();
 
-// This job is sent to the "emails" queue...
+// Это задание отправлено в очередь "электронных писем"...
 Job::dispatch()->onQueue('emails');
 ```
 
-#### 4th Level
+#### 4-й уровень
 
-In order to use the `database` queue driver, you will need a database table to hold the jobs. To generate a migration that creates this table, run the `queue:table` Artisan command. Once the migration has been created, you may migrate your database using the `migrate` command:
+Чтобы использовать драйвер очереди `database`, Вам понадобится таблица базы данных для хранения заданий. Чтобы сгенерировать миграцию, которая создает эту таблицу, запустите Artisan-команду `queue:table`. После того, как миграция будет создана, Вы можете перенести свою базу данных с помощью команды `migrate`:
 
 ```bash
 php artisan queue:table
