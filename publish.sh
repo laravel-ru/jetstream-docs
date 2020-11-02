@@ -17,7 +17,7 @@ echo "Removing existing files"
 rm -rf $docs/*
 
 echo "Generating site"
-vuepress build
+npm run docs:build
 cp $out/* $docs/ -r
 echo $site >> $docs/CNAME
 touch $docs/.nojekyll
