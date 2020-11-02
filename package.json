@@ -1,6 +1,7 @@
 {
     "dependencies": {
-        "vuepress": "^1.5"
+        "vuepress": "^1.5",
+        "vuepress-plugin-metrika": "^1.0.2"
     },
     "scripts": {
         "start": "npm run docs:dev",

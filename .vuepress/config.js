@@ -34,4 +34,18 @@ module.exports = {
             '/1.x/': require('./1.x')
         },
     },
+    plugins: [
+        [
+            'metrika',
+            {
+                counter: '68952709',
+                config: {
+                    accurateTrackBounce: true,
+                    clickmap: true,
+                    trackLinks: true,
+                    webvisor: false
+                }
+            }
+        ]
+    ],
 }
