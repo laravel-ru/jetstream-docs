@@ -1,7 +1,7 @@
 out=".vuepress/dist"
 docs="_gh_pages"
 ghPagesBranch="gh-pages"
-site="jetstream.laravel.info"
+site="jetstream.getlaravel.ru"
 
 echo "Deleting old publication"
 rm -rf $out
