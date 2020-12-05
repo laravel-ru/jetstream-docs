@@ -4,42 +4,27 @@
 
 ## Установка Jetstream
 
-Если Вы установили [Установщик Laravel](https://laravel.com/docs/installation#installing-laravel), Вы можете использовать параметр `--jet` для создания нового приложения Laravel на базе Jetstream:
-
-```bash
-laravel new project-name --jet
-```
-
-После установки Jetstream через установщик Laravel Вы должны запустить миграцию базы данных:
-
-```bash
-php artisan migrate
-```
-
-:::danger Существующие проекты
-
-Jetstream предназначен для установки только в **новых** проектах Laravel. Не следует пытаться перенести существующий проект в Jetstream.
-:::
-
-### Установка с помощью Composer
-
-В качестве альтернативы Вы можете использовать Composer для установки Jetstream в свой новый проект Laravel:
+Вы можете использовать Composer для установки Jetstream в свой новый проект Laravel:
 
 ```bash
 composer require laravel/jetstream
 ```
 
-Если Вы выбрали установку Jetstream через Composer, Вы должны запустить Artisan-команду `jetstream:install`. Эта команда принимает имя стека, которое Вы предпочитаете (livewire или inertia). Мы настоятельно рекомендуем Вам прочитать всю документацию [Livewire](https://laravel-livewire.com) или [Inertia](https://inertiajs.com) или [перевод официальной документации Inertia](https://inertiajs.ru) перед тем, как начать свой проект Jetstream. Кроме того, Вы можете использовать параметр `--teams` для включения поддержки команды:
+После установки пакета Jetstream Вы должны запустить Artisan-команду `jetstream:install`. Эта команда принимает имя стека, которое Вы предпочитаете (livewire или inertia). Мы настоятельно рекомендуем Вам прочитать всю документацию [Livewire](https://laravel-livewire.com) или [Inertia](https://inertiajs.com) перед тем, как начать свой проект Jetstream. Кроме того, Вы можете использовать переключатель `--teams` для включения поддержки группы:
 
 #### Установка Jetstream с Livewire
 
 ```bash
+php artisan jetstream:install livewire
+
 php artisan jetstream:install livewire --teams
 ```
 
 #### Или, Установка Jetstream с Inertia
 
 ```bash
+php artisan jetstream:install inertia
+
 php artisan jetstream:install inertia --teams
 ```
 
