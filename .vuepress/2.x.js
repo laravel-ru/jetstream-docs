@@ -1,6 +1,6 @@
 module.exports = [
     {
-        title: "Getting Started",
+        title: "Начало работы",
         collapsable: false,
         children: [
             'introduction',
@@ -9,7 +9,7 @@ module.exports = [
             'building-your-app',
         ],
     }, {
-        title: "Features",
+        title: "Функции",
         collapsable: false,
         children: prefix('features', [
             'authentication',
@@ -23,7 +23,7 @@ module.exports = [
             'teams',
         ]),
     }, {
-        title: "Stack Features",
+        title: "Функции стека",
         collapsable: false,
         children: prefix('stacks', [
             'livewire',
