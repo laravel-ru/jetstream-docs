@@ -1,77 +1,77 @@
-# Concept Overview
+# Обзор концепции
 
 [[toc]]
 
-## Introduction
+## Введение
 
-Laravel Jetstream's architecture is a little different than other Laravel application starter kits such as [Laravel Breeze](https://laravel.com/docs/starter-kits). In this documentation, we'll cover some of the high-level concepts that will help you understand how Laravel Jetstream is constructed.
+Архитектура Laravel Jetstream немного отличается от других стартовых наборов приложений Laravel, таких как [Laravel Breeze](https://laravel.com/docs/starter-kits). В этой документации мы рассмотрим некоторые высокоуровневые концепции, которые помогут Вам понять, как устроен Laravel Jetstream.
 
 ## Laravel Fortify
 
-Under the hood, the authentication portions of Jetstream are powered by [Laravel Fortify](https://github.com/laravel/fortify), which is a front-end agnostic, "headless" authentication backend for Laravel.
+Под капотом аутентификационные части Jetstream работают на [Laravel Fortify](https://github.com/laravel/fortify), который является независимым от внешнего интерфейса, «безголовым» сервером аутентификации для Laravel.
 
-Fortify registers the routes and controllers needed to implement all of Laravel's authentication features, including login, registration, password reset, email verification, and more. After installing Fortify, you may run the `route:list` Artisan command to see the routes that Fortify has registered.
+Fortify регистрирует маршруты и контроллеры, необходимые для реализации всех функций аутентификации Laravel, включая вход в систему, регистрацию, сброс пароля, проверку электронной почты и многое другое. После установки Fortify Вы можете запустить Artisan-команду `route:list`, чтобы просмотреть маршруты, зарегистрированные Fortify.
 
-Since Fortify does not provide its own user interface, it is meant to be paired with your own user interface which makes requests to the routes it registers. Laravel Jetstream is our first-party implementation of a user interface built on top of the Fortify authentication backend.
+Поскольку Fortify не предоставляет собственный пользовательский интерфейс, он предназначен для работы в паре с Вашим собственным пользовательским интерфейсом, который отправляет запросы на регистрируемые им маршруты. Laravel Jetstream - это наша собственная реализация пользовательского интерфейса, построенная на основе бэкэнда аутентификации Fortify.
 
-#### Fortify Configuration
+#### Конфигурация Fortify
 
-When Jetstream is installed, a `config/fortify.php` configuration file is installed into your application. Within this configuration file, you can customize various aspects of Fortify's behavior, such as the authentication guard that should be used, where users should be redirected after authentication, and more.
+Когда Jetstream установлен, в Ваше приложение устанавливается файл конфигурации `config/fortify.php`. В этом файле конфигурации Вы можете настроить различные аспекты поведения Fortify, такие как средство защиты аутентификации, которое следует использовать, куда следует перенаправлять пользователей после аутентификации и многое другое.
 
-Within the `fortify` configuration file, you can also disable entire features of Fortify, such as the ability to update profile information or passwords.
+В файле конфигурации `fortify` Вы также можете отключить все функции Fortify, такие как возможность обновления информации профиля или паролей.
 
-## Actions
+## Действия
 
-In contrast to [Laravel Breeze](https://laravel.com/docs/starter-kits), Laravel Jetstream does not publish controllers or routes to your application. Instead, Jetstream's functionality is customized via "Action" classes. During the Jetstream installation process, actions are published to your application's `app/Actions` directory.
+В отличие от [Laravel Breeze](https://laravel.com/docs/starter-kits), Laravel Jetstream не публикует контроллеры или маршруты для Вашего приложения. Вместо этого функциональность Jetstream настраивается с помощью классов «Action». В процессе установки Jetstream действия публикуются в каталоге Вашего приложения `app/Actions`.
 
-Action classes typically perform a single action and correspond to a single Jetstream or Fortify feature, such as creating a team or deleting a user. You are free to customize these classes if you would like to tweak the backend behavior of Jetstream. Each of the relevant actions published by Jetstream will be discussed within the feature's corresponding documentation.
+Классы действий обычно выполняют одно действие и соответствуют одной функции Jetstream или Fortify, такой как создание группы или удаление пользователя. Вы можете настроить эти классы, если хотите настроить внутреннее поведение Jetstream. Каждое из соответствующих действий, опубликованных Jetstream, будет обсуждаться в соответствующей документации функции.
 
-## Views / Pages
+## Представления / Страницы
 
-During installation, Jetstream will publish a variety of views and classes to your application. When using Livewire, views will be published to your application's `resources/views` directory. When using Inertia, "Pages" will be published to your `resources/js/Pages` directory.
+Во время установки Jetstream опубликует в Вашем приложении различные представления и классы. При использовании Livewire представления будут публиковаться в каталоге `resources/views` Вашего приложения. При использовании Inertia «Страницы» будут опубликованы в Вашем каталоге `resources/js/Pages`.
 
-The views / pages published by Jetstream contain every feature supported by Jetstream and you are free to customize them as needed. Think of Jetstream as a starting point for your application. Once you have installed Jetstream, you are free to customize anything you like.
+Представления / страницы, опубликованные Jetstream, содержат все функции, поддерживаемые Jetstream, и Вы можете свободно настраивать их по мере необходимости. Думайте о Jetstream как о отправной точке для Вашего приложения. После того, как Вы установили Jetstream, Вы можете настроить все, что захотите.
 
-### Layouts
+### Макеты
 
-#### The Application Layout
+#### Макет приложения
 
-After installation, your Jetstream application will contain two "layouts". First, Jetstream creates an application layout that is used to define the layout of your application's pages that require authentication, such as your application's dashboard. When using the Livewire stack, this layout is defined at `resources/views/layouts/app.blade.php` and rendered by the `App\View\Components\AppLayout` class. When using the Inertia stack, this layout is defined at `resources/js/Layouts/AppLayout.vue`.
+После установки ваше приложение Jetstream будет содержать два «макета». Во-первых, Jetstream создает макет приложения, который используется для определения макета страниц Вашего приложения, требующих аутентификации, например, панели мониторинга Вашего приложения. При использовании стека Livewire этот макет определяется в `resources/views/layouts/app.blade.php` и отображается классом `App\View\Components\AppLayout`. При использовании стека Inertia этот макет определяется в `resources/js/Layouts/AppLayout.vue`.
 
-#### The Guest / Authentication Layout
+#### Макет гостя / аутентификации
 
-In addition to the application layout, Jetstream creates a "guest" layout that is used to define the layout for Jetstream's authentication related pages, such as your application's login, registration, and password reset pages. When using the Livewire stack, this layout is defined at `resources/views/layouts/guest.blade.php` and rendered by the `App\View\Components\GuestLayout` class. When using the Inertia stack, this layout is defined at `resources/js/Layouts/GuestLayout.vue`.
+В дополнение к макету приложения Jetstream создает «гостевой» макет, который используется для определения макета страниц, связанных с аутентификацией Jetstream, таких как страницы входа в систему, регистрации и сброса пароля Вашего приложения. При использовании стека Livewire этот макет определяется в `resources/views/layouts/guest.blade.php` и отображается классом `App\View\Components\GuestLayout`. При использовании стека Inertia этот макет определяется в `resources/js/Layouts/GuestLayout.vue`.
 
-### Dashboard
+### Панель
 
-The "main" view of your application is published at `resources/views/dashboard.blade.php` when using Livewire and `resources/js/Pages/Dashboard.vue` when using Inertia. You are free to use this as a starting point for building the primary "dashboard" of your application.
+«Главный» вид Вашего приложения публикуется в `resources/views/dashboard.blade.php` при использовании Livewire и `resources/js/Pages/Dashboard.vue` при использовании Inertia. Вы можете использовать это как отправную точку для создания основной «приборной панели» Вашего приложения.
 
-### Livewire Components
+### Компоненты Livewire
 
-When using the Livewire stack, Jetstream utilizes a variety of generic Blade components such as buttons and modals. If you are using the Livewire stack and you would like to publish these components after installing Jetstream, you may use the `vendor:publish` Artisan command:
+При использовании стека Livewire Jetstream использует множество общих компонентов Blade, таких как кнопки и модальные окна. Если Вы используете стек Livewire и хотите опубликовать эти компоненты после установки Jetstream, Вы можете использовать Artisan-команду `vendor:publish`:
 
 ```bash
 php artisan vendor:publish --tag=jetstream-views
 ```
 
-Once these components have been published, you are free to modify them as necessary to adjust the look and feel of your application.
+После публикации этих компонентов Вы можете изменять их по мере необходимости, чтобы настроить внешний вид Вашего приложения.
 
 ## Tailwind
 
-During installation, Jetstream will scaffold your application's integration with the Tailwind CSS framework. Specifically, a `webpack.mix.js` file and `tailwind.config.js` file will be created. These two files are used to build your application's compiled CSS output. You are free to modify these files as needed for your application.
+Во время установки Jetstream обеспечит интеграцию Вашего приложения с фреймворком Tailwind CSS. В частности, будут созданы файлы `webpack.mix.js` и `tailwind.config.js`. Эти два файла используются для создания скомпилированного вывода CSS Вашего приложения. Вы можете изменять эти файлы по мере необходимости для своего приложения.
 
-In addition, your `tailwind.config.js` file has been pre-configured to support PurgeCSS with the relevant directories properly specified depending on your chosen Jetstream stack.
+Кроме того, Ваш файл `tailwind.config.js` был предварительно настроен для поддержки PurgeCSS с соответствующими каталогами, правильно указанными в зависимости от выбранного Вами стека Jetstream.
 
-Your application's `package.json` file is already scaffolded with NPM commands that you may use to compile your assets. For more information on compiling your application's assets, consult the [Laravel Mix documentation](https://laravel.com/docs/mix):
+Файл `package.json` Вашего приложения уже содержит команды NPM, которые Вы можете использовать для компиляции Ваших ресурсов. Для получения дополнительной информации о компиляции ресурсов Вашего приложения обратитесь к [документации Laravel Mix](https://laravel.com/docs/mix):
 
 ```bash
-# Compile your CSS / JavaScript for development...
+# Скомпилируйте свой CSS / JavaScript для разработки...
 npm run dev
 
-# Compile your CSS / JavaScript for production...
+# Скомпилируйте свой CSS / JavaScript для продакшена...
 npm run prod
 
-# Compile your CSS / JavaScript for development and recompile on change...
+# Скомпилируйте свой CSS / JavaScript для разработки и перекомпилируйте при изменении...
 npm run watch
 ```
 

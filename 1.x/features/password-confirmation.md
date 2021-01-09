@@ -1,40 +1,40 @@
-# Password Confirmation
+# Подтверждение пароля
 
 [[toc]]
 
-## Introduction
+## Введение
 
-While building your application, you may occasionally have actions that should require the user to confirm their password before the action is performed. For example, Jetstream itself requires users to confirm their password before changing their two-factor authentication settings. Thankfully, Jetstream has built-in functionality to make this a cinch.
+При создании приложения Вы можете иногда выполнять действия, требующие от пользователя подтверждения пароля перед выполнением действия. Например, сама Jetstream требует, чтобы пользователи подтвердили свой пароль перед изменением настроек двухфакторной аутентификации. К счастью, Jetstream имеет встроенную функциональность, которая упрощает это.
 
-Jetstream provides two approaches to password confirmation: redirect based password confirmation and modal based password confirmation.
+Jetstream предлагает два подхода к подтверждению пароля: подтверждение пароля на основе перенаправления и модальное подтверждение пароля.
 
-#### Redirect Based Password Confirmation
+#### Подтверждение пароля на основе перенаправления
 
-Redirect based password confirmation is typically used when the user needs to confirm their password before accessing an entire screen that is rendered by your application, such as a billing settings screen.
+Подтверждение пароля на основе перенаправления обычно используется, когда пользователю необходимо подтвердить свой пароль перед доступом ко всему экрану, отображаемому Вашим приложением, например экрану настроек биллинга.
 
-This form of password confirmation redirects the user to a dedicated password confirmation screen where they must confirm their password before being redirected to their intended destination.
+Эта форма подтверждения пароля перенаправляет пользователя на специальный экран подтверждения пароля, где он должен подтвердить свой пароль перед перенаправлением в предполагаемое место назначения.
 
-#### Modal Based Password Confirmation
+#### Подтверждение пароля на модальной основе
 
-Modal based password authentication might be used when you would like the user to confirm their password before performing a specific action, such as when enabling two-factor authentication.
+Модальная парольная аутентификация может использоваться, когда Вы хотите, чтобы пользователь подтвердил свой пароль перед выполнением определенного действия, например, при включении двухфакторной аутентификации.
 
-This form of password confirmation displays a modal window that allows the user to confirm their password before their intended request is executed.
+Эта форма подтверждения пароля отображает модальное окно, которое позволяет пользователю подтвердить свой пароль до того, как его предполагаемый запрос будет выполнен.
 
-## Redirect Password Confirmation
+## Перенаправление подтверждение пароля
 
-The following documentation will discuss how to use redirect based password confirmation in Jetstream. Redirect based password confirmation is typically used when the user needs to confirm their password before accessing an entire screen that is rendered by your application, such as a billing settings screen.
+В следующей документации обсуждается, как использовать подтверждение пароля на основе перенаправления в Jetstream. Подтверждение пароля на основе перенаправления обычно используется, когда пользователю необходимо подтвердить свой пароль перед доступом ко всему экрану, отображаемому Вашим приложением, например экрану настроек биллинга.
 
-This form of password confirmation redirects the user to a dedicated password confirmation screen where they must confirm their password before being redirected to their intended destination.
+Эта форма подтверждения пароля перенаправляет пользователя на специальный экран подтверждения пароля, где он должен подтвердить свой пароль перед перенаправлением в предполагаемое место назначения.
 
-![Screenshot of Password Confirmation](./../../assets/img/redirect-confirm.png)
+![Скриншот подтверждения пароля](./../../assets/img/redirect-confirm.png)
 
-### Redirect Password Confirmation Via Livewire
+### Перенаправление подтверждение пароля через Livewire
 
-#### Protecting Routes
+#### Защита маршрутов
 
-To implement password confirmation via redirect to a password confirmation screen, you should ensure that the route that will render the view that requires password confirmation and any routes that perform the confirmed actions are assigned the `password.confirm` middleware.
+Чтобы реализовать подтверждение пароля через перенаправление на экран подтверждения пароля, Вы должны убедиться, что маршрут, который будет отображать представление, требующее подтверждения пароля, и любые маршруты, которые выполняют подтвержденные действия, назначены мидлвару `password.confirm`.
 
-This middleware is included with the default installation of Laravel and will ensure that the user is redirected to your application's password confirmation screen if they attempt to access the routes without confirming their password:
+Этот мидлвар входит в стандартную установку Laravel и гарантирует, что пользователь будет перенаправлен на экран подтверждения пароля Вашего приложения, если они попытаются получить доступ к маршрутам без подтверждения своего пароля:
 
 ```php
 Route::get('/billing', function () {
@@ -46,17 +46,17 @@ Route::post('/billing', function () {
 })->middleware(['password.confirm']);
 ```
 
-That view that renders the Livewire stack's password confirmation screen is located at `resources/views/auth/confirm-password.blade.php`. Generally, this view should not need customization; however, you are free to make general presentational tweaks to this page based on your own application's design.
+Это представление, которое отображает экран подтверждения пароля стека Livewire, находится по адресу `resources/views/auth/confirm-password.blade.php`. Как правило, это представление не требует настройки; однако Вы можете вносить общие изменения в презентацию этой страницы на основе дизайна Вашего собственного приложения.
 
-#### Ensuring The Password Has Been Confirmed
+#### Убедитесь, что пароль подтвержден
 
-Next, Livewire components that contains an action that should require password confirmation before being invoked should use the `Laravel\Jetstream\ConfirmsPasswords` trait.
+Затем компоненты Livewire, содержащие действие, которое должно требовать подтверждения пароля перед вызовом, должны использовать трейт `Laravel\Jetstream\ConfirmsPasswords`.
 
-After adding this trait to a component, you should call the `ensurePasswordIsConfirmed` method within any Livewire action that requires password confirmation. This should be done at the very beginning of the relevant action method:
+После добавления этой характеристики в компонент Вы должны вызвать метод `ensurePasswordIsConfirmed` в любом действии Livewire, требующем подтверждения пароля. Делать это нужно в самом начале соответствующего метода действий:
 
 ```php
 /**
- * Enable administration mode for user.
+ * Включить режим администрирования для пользователя.
  *
  * @return void
  */
@@ -68,16 +68,16 @@ public function enableAdminMode()
 }
 ```
 
-:::warning Password Confirmation Expiration
+:::warning Срок действия подтверждения пароля
 
-Once the user has confirmed their password, they will not be required to re-enter their password until the number of seconds defined by the your application's `auth.password_timeout` configuration option have elapsed:
+После того, как пользователь подтвердит свой пароль, ему не потребуется повторно вводить пароль до тех пор, пока не истечет количество секунд, определенное параметром конфигурации Вашего приложения `auth.password_timeout`:
 :::
 
-### Redirect Password Confirmation Via Inertia
+### Перенаправление подтверждение пароля через Inertia
 
-To implement password confirmation via redirect to a password confirmation screen, you should ensure that the route that will render the view that requires password confirmation and any routes that perform the confirmed actions are assigned the `password.confirm` middleware.
+Чтобы реализовать подтверждение пароля через перенаправление на экран подтверждения пароля, Вы должны убедиться, что маршрут, который будет отображать представление, требующее подтверждения пароля, и любые маршруты, которые выполняют подтвержденные действия, назначены мидлвару `password.confirm`.
 
-This middleware is included with the default installation of Laravel and will ensure that the user is redirected to your application's password confirmation screen if they attempt to access the routes without confirming their password:
+Этот мидлвар входит в стандартную установку Laravel и гарантирует, что пользователь будет перенаправлен на экран подтверждения пароля Вашего приложения, если они попытаются получить доступ к маршрутам без подтверждения своего пароля:
 
 ```php
 Route::get('/billing', function () {
@@ -89,30 +89,30 @@ Route::post('/billing', function () {
 })->middleware(['password.confirm']);
 ```
 
-That page that renders the Inertia's stack's password confirmation screen is located at `resources/js/Pages/Auth/ConfirmPassword.vue`. Generally, this page should not need customization; however, you are free to make general presentational tweaks to this page based on your own application's design.
+Эта страница, которая отображает экран подтверждения пароля стека Inertia, находится в `resources/js/Pages/Auth/ConfirmPassword.vue`. Как правило, эту страницу не нужно настраивать; однако Вы можете вносить общие изменения в презентацию этой страницы на основе дизайна Вашего собственного приложения.
 
-:::warning Password Confirmation Expiration
+:::warning Срок действия подтверждения пароля
 
-Once the user has confirmed their password, they will not be required to re-enter their password until the number of seconds defined by the your application's `auth.password_timeout` configuration option have elapsed:
+После того, как пользователь подтвердит свой пароль, ему не потребуется повторно вводить пароль до тех пор, пока не истечет количество секунд, определенное параметром конфигурации Вашего приложения `auth.password_timeout`:
 :::
 
-## Modal Password Confirmation
+## Подтверждение модального пароля
 
-The following documentation will discuss how to use modal based password confirmation in Jetstream. Modal based password authentication is typically used when you would like the user to confirm their password before performing a specific action, such as when enabling two-factor authentication.
+В следующей документации обсуждается, как использовать модальное подтверждение пароля в Jetstream. Модальная парольная аутентификация обычно используется, когда Вы хотите, чтобы пользователь подтвердил свой пароль перед выполнением определенного действия, например, при включении двухфакторной аутентификации.
 
-This form of password confirmation displays a modal window that allows the user to confirm their password before their intended request is executed.
+Эта форма подтверждения пароля отображает модальное окно, которое позволяет пользователю подтвердить свой пароль до того, как его предполагаемый запрос будет выполнен.
 
-![Screenshot of Password Confirmation](./../../assets/img/modal-confirm.png)
+![Скриншот подтверждения пароля](./../../assets/img/modal-confirm.png)
 
-### Modal Password Confirmation Via Livewire
+### Модальное подтверждение пароля через Livewire
 
-#### Component Preparation
+#### Подготовка компонентов
 
-If you are using the Livewire stack, the Livewire component that contains the action that should require password confirmation before being invoked should use the `Laravel\Jetstream\ConfirmsPasswords` trait.
+Если Вы используете стек Livewire, компонент Livewire, содержащий действие, которое должно требовать подтверждения пароля перед вызовом, должен использовать трейт `Laravel\Jetstream\ConfirmsPasswords`.
 
-#### The `confirms-password` Blade Component
+#### Блейд-компонент `confirms-password`
 
-Next, in your application's user interface, you should wrap the button that triggers the action within the `confirms-password` Blade component. The `confirms-password` wrapper component should contain a `wire:then` directive that specifies which Livewire action should be run once the user's password has been confirmed:
+Затем в пользовательском интерфейсе Вашего приложения Вы должны заключить кнопку, которая запускает действие, в блейд-компонент `confirms-password`. Компонент оболочки `confirms-password` должен содержать директиву `wire:then`, которая указывает, какое действие Livewire должно выполняться после подтверждения пароля пользователя:
 
 ```html
 <x-jet-confirms-password wire:then="enableAdminMode">
@@ -122,13 +122,13 @@ Next, in your application's user interface, you should wrap the button that trig
 </x-jet-confirms-password>
 ```
 
-#### Ensuring The Password Is Confirmed
+#### Обеспечение подтверждения пароля
 
-After adding the `confirms-password` component to your application's user interface, you should call the `ensurePasswordIsConfirmed` method within the Livewire action that requires password confirmation. This should be done at the very beginning of the relevant action method:
+После добавления компонента `confirms-password` в пользовательский интерфейс Вашего приложения Вы должны вызвать метод `ensurePasswordIsConfirmed` в действии Livewire, которое требует подтверждения пароля. Делать это нужно в самом начале соответствующего метода действий:
 
 ```php
 /**
- * Enable administration mode for user.
+ * Включить режим администрирования для пользователя.
  *
  * @return void
  */
@@ -140,16 +140,16 @@ public function enableAdminMode()
 }
 ```
 
-:::warning Password Confirmation Expiration
+:::warning 
 
-Once the user has confirmed their password, they will not be required to re-enter their password until the number of seconds defined by the your application's `auth.password_timeout` configuration option have elapsed:
+После того, как пользователь подтвердит свой пароль, ему не потребуется повторно вводить пароль до тех пор, пока не истечет количество секунд, определенное параметром конфигурации Вашего приложения `auth.password_timeout`:
 :::
 
-### Modal Password Confirmation Via Inertia
+### Модальное подтверждение пароля через Inertia
 
-#### The `ConfirmsPassword` Vue Component
+#### Компонент Vue `ConfirmsPassword`
 
-If you are using the Inertia stack, you should wrap the user interface element that triggers an action requiring password confirmation with the `ConfirmsPassword` Vue component provided by Jetstream. To get started, import the `ConfirmsPassword` component into your page:
+Если Вы используете стек Inertia, Вам следует обернуть элемент пользовательского интерфейса, который запускает действие, требующее подтверждения пароля, с помощью компонента Vue `ConfirmsPassword`, предоставляемого Jetstream. Для начала импортируйте компонент `ConfirmsPassword` на свою страницу:
 
 ```js
 import JetConfirmsPassword from './Jetstream/ConfirmsPassword'
@@ -162,7 +162,7 @@ export default {
 }
 ```
 
-Next, wrap the component around the user interface element that triggers the action that should be confirmed. Your page should listen for the `ConfirmsPassword` component's `@confirmed` event in order to trigger the method that should be called once the user's password is confirmed:
+Затем оберните компонент вокруг элемента пользовательского интерфейса, который запускает действие, которое необходимо подтвердить. Ваша страница должна прослушивать событие `@confirmed` компонента `ConfirmsPassword`, чтобы активировать метод, который должен вызываться после подтверждения пароля пользователя:
 
 ```html
 <jet-confirms-password @confirmed="enableAdminMode">
@@ -172,9 +172,9 @@ Next, wrap the component around the user interface element that triggers the act
 </jet-confirms-password>
 ```
 
-#### Ensuring The Password Is Confirmed
+#### Обеспечение подтверждения пароля
 
-After adding the `ConfirmsPassword` component to your user interface, you should ensure that the route that performs the confirmed action is assigned the `password.confirm` middleware. This middleware is included with the default installation of Laravel:
+После добавления компонента `ConfirmsPassword` к Вашему пользовательскому интерфейсу Вы должны убедиться, что маршруту, выполняющему подтвержденное действие, назначен мидлвар `password.confirm`. Этот мидлвар включен в стандартную установку Laravel:
 
 ```php
 Route::post('/admin-mode', function () {
@@ -182,21 +182,21 @@ Route::post('/admin-mode', function () {
 })->middleware(['password.confirm']);
 ```
 
-:::warning Password Confirmation Expiration
+:::warning После того, как пользователь подтвердит свой пароль, ему не потребуется повторно вводить пароль до тех пор, пока не истечет количество секунд, определенное параметром конфигурации Вашего приложения `auth.password_timeout`:
 
-Once the user has confirmed their password, they will not be required to re-enter their password until the number of seconds defined by the your application's `auth.password_timeout` configuration option have elapsed:
+После того, как пользователь подтвердит свой пароль, ему не потребуется повторно вводить пароль до тех пор, пока не истечет количество секунд, определенное параметром конфигурации Вашего приложения `auth.password_timeout`:
 :::
 
-## Customizing How Passwords Are Confirmed
+## Настройка способа подтверждения паролей
 
-Sometimes, you may wish to customize how the user's password is validated during confirmation. To do so, you may use the `Fortify::confirmPasswordsUsing` method. This method accepts a closure which receives the authenticated user instance and the `password` input field of the request. The closure should return `true` if the password is valid for the given user. Typically, this method should be called from the `boot` method of your `JetstreamServiceProvider`:
+Иногда Вам может потребоваться настроить способ проверки пароля пользователя во время подтверждения. Для этого Вы можете использовать метод `Fortify::confirmPasswordsUsing`. Этот метод принимает замыкание, которое получает экземпляр аутентифицированного пользователя и поле ввода запроса `password`. Замыкание должно вернуть `true`, если пароль действителен для данного пользователя. Обычно этот метод следует вызывать из метода `boot` Вашего `JetstreamServiceProvider`:
 
 ```php
 use Illuminate\Support\Facades\Hash;
 use Laravel\Fortify\Fortify;
 
 /**
- * Bootstrap any application services.
+ * Загрузка любых служб приложений.
  *
  * @return void
  */
@@ -210,7 +210,7 @@ public function boot()
 }
 ```
 
-If you prefer to encapsulate your password confirmation process within a class instead of a closure, you may pass a PHP "callable" array to the `confirmPasswordsUsing` method:
+Если Вы предпочитаете инкапсулировать процесс подтверждения пароля в классе, а не в замыкании, Вы можете передать "вызываемый" массив PHP методу `confirmPasswordsUsing`:
 
 ```php
 use App\Actions\ConfirmPassword;

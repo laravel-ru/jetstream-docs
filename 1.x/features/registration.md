@@ -1,62 +1,62 @@
-# Registration
+# Регистрация
 
 [[toc]]
 
-## Introduction
+## Введение
 
-Of course, before anyone can use your application, they need to create an account. Thankfully, Jetstream provides a registration view and a corresponding action that handles user registrations so that you can focus on building your application.
+Конечно, прежде чем кто-либо сможет использовать Ваше приложение, им необходимо создать учетную запись. К счастью, Jetstream предоставляет представление регистрации и соответствующее действие, которое обрабатывает регистрацию пользователей, так что Вы можете сосредоточиться на создании своего приложения.
 
-![Screenshot of Authentication](./../../assets/img/authentication.png)
+![Скриншот аутентификации](./../../assets/img/authentication.png)
 
-## Actions
+## Действия
 
-As typical of most Jetstream features, the logic executed to satisfy registration requests can be found in an action class within your application. Remember, actions are granular classes that are responsible for performing a single task related to a Jetstream or Fortify feature.
+Как типично для большинства функций Jetstream, логику, выполняемую для удовлетворения запросов на регистрацию, можно найти в классе действий в Вашем приложении. Помните, что действия - это гранулярные классы, которые отвечают за выполнение одной задачи, связанной с функцией Jetstream или Fortify.
 
-Specifically, the `App\Actions\Fortify\CreateNewUser` class will be invoked when a user registers with your application. This action is responsible for validating the incoming request input and creating the user. Therefore, any customizations you wish to make to user creation logic should be made in this class. The action receives an array of `$input` that contains all of the input from the incoming request.
+В частности, класс `App\Actions\Fortify\CreateNewUser` будет вызываться, когда пользователь регистрируется в Вашем приложении. Это действие отвечает за проверку ввода входящего запроса и создание пользователя. Следовательно, любые настройки, которые Вы хотите внести в логику создания пользователей, должны выполняться в этом классе. Действие получает массив `$input`, который содержит все входные данные входящего запроса.
 
-### Password Validation Rules
+### Правила проверки пароля
 
-The `App\Actions\Fortify\CreateNewUser`, `App\Actions\Fortify\ResetUserPassword`, and `App\Actions\Fortify\UpdateUserPassword` actions all utilize the `App\Actions\Fortify\PasswordValidationRules` trait.
+Действия `App\Actions\Fortify\CreateNewUser`, `App\Actions\Fortify\ResetUserPassword` и `App\Actions\Fortify\UpdateUserPassword` используют трейт `App\Actions\Fortify\PasswordValidationRules`.
 
-As you may have noticed, the `App\Actions\Fortify\PasswordValidationRules` trait utilizes a custom `Laravel\Fortify\Rules\Password` validation rule object. This object allows you to easily customize the password requirements for your application. By default, the rule requires a password that is at least eight characters in length. However, you may use the following methods to customize the password's requirements:
+Как вы могли заметить, трейт `App\Actions\Fortify\PasswordValidationRules` использует настраиваемый объект правила проверки `Laravel\Fortify\Rules\Password`. Этот объект позволяет Вам легко настроить требования к паролю для Вашего приложения. По умолчанию для правила требуется пароль длиной не менее восьми символов. Однако Вы можете использовать следующие методы для настройки требований к паролю:
 
 ```php
 use Laravel\Fortify\Rules\Password;
 
-// Require at least 10 characters...
+// Требуется не менее 10 символов...
 (new Password)->length(10)
 
-// Require at least one uppercase character...
+// Требуется хотя бы один символ верхнего регистра...
 (new Password)->requireUppercase()
 
-// Require at least one numeric character...
+// Требуется хотя бы один числовой символ...
 (new Password)->requireNumeric()
 
-// Require at least one special character...
+// Требуется хотя бы один специальный символ...
 (new Password)->requireSpecialCharacter()
 ```
 
-Of course, these methods may be chained to define the password validation rules for your application:
+Конечно, эти методы можно объединить в цепочку, чтобы определить правила проверки пароля для Вашего приложения:
 
 ```php
 (new Password)->length(10)->requireSpecialCharacter()
 ```
 
-## Views / Pages
+## Представления / Страницы
 
-When using the Livewire stack, the registration view is displayed using the `resources/views/auth/register.blade.php` Blade template. When using the Inertia stack, this view is displayed using the `resources/js/Pages/Auth/Register.vue` template. Any additional fields you add to these pages will be available via the `$input` array passed to the `App\Actions\Fortify\CreateNewUser` action.
+При использовании стека Livewire представление регистрации отображается с использованием шаблона Blade `resources/views/auth/register.blade.php`. При использовании стека инерции это представление отображается с использованием шаблона `resources/js/Pages/Auth/Register.vue`. Любые дополнительные поля, которые Вы добавляете на эти страницы, будут доступны через массив `$input`, переданный в действие `App\Actions\Fortify\CreateNewUser`.
 
-### Customizing The Registration View
+### Настройка представления регистрации
 
-Laravel Jetstream will automatically render the proper views for your application's registration screen. However, sometimes you may wish to customize how the view / page is rendered.
+Laravel Jetstream автоматически отобразит соответствующие представления для экрана регистрации Вашего приложения. Однако иногда Вам может потребоваться настроить способ отображения представления / страницы.
 
-All of Fortify's authentication view rendering logic may be customized using the appropriate methods available via the `Laravel\Fortify\Fortify` class. Typically, you should call this method from the `boot` method of your application's `App\Providers\JetstreamServiceProvider` class:
+Вся логика визуализации представления аутентификации Fortify может быть настроена с помощью соответствующих методов, доступных через класс `Laravel\Fortify\Fortify`. Как правило, этот метод следует вызывать из метода `boot` класса `App\Providers\JetstreamServiceProvider`:
 
 ```php
 use Laravel\Fortify\Fortify;
 
 /**
- * Bootstrap any application services.
+ * Загрузка любых служб приложений.
  *
  * @return void
  */
@@ -68,9 +68,9 @@ public function boot()
 }
 ```
 
-#### Customizing Inertia Registration Views
+#### Настройка представлений регистрации инерции
 
-If your application is using the Inertia stack, you may return Inertia pages from your view customization closures:
+Если Ваше приложение использует стек Inertia, Вы можете вернуть страницы Inertia из Ваших замыканий настройки представления:
 
 ```php
 use Illuminate\Support\Facades\Route;
@@ -82,11 +82,11 @@ Fortify::registerView(function () {
 });
 ```
 
-## Requiring Terms Of Service / Privacy Policy Approval
+## Требуется утверждение условий обслуживания / политики конфиденциальности
 
-Many application require users to accept their terms of service / privacy policy during registration. Jetstream allows you to easily enable this requirement for your own application, as well as provides a convenient way of writing these documents using Markdown.
+Многие приложения требуют, чтобы пользователи приняли их условия обслуживания / политику конфиденциальности во время регистрации. Jetstream позволяет легко включить это требование для Вашего собственного приложения, а также предоставляет удобный способ написания этих документов с помощью Markdown.
 
-To get started, enable this feature in your application's `config/jetstream.php` configuration file:
+Для начала включите эту функцию в файле конфигурации Вашего приложения `config/jetstream.php`:
 
 ```php
 use Laravel\Fortify\Features;
@@ -100,13 +100,13 @@ use Laravel\Fortify\Features;
 ],
 ```
 
-Next, you may write your terms of service / privacy policy documents by modifying your application's `resources/markdown/terms.md` and `resources/markdown/policy.md` files.
+Затем Вы можете написать свои условия обслуживания / документы о политике конфиденциальности, изменив файлы Вашего приложения `resources/markdown/terms.md` и `resources/markdown/policy.md`.
 
-During registration, Jetstream will automatically ask the user to approve these documents. When the user clicks on the link to view the documents, Jetstream will use [Tailwind's typography plug-in](https://tailwindcss.com/docs/typography-plugin) to render the Markdown into beautifully formatted prose.
+Во время регистрации Jetstream автоматически попросит пользователя утвердить эти документы. Когда пользователь щелкает ссылку для просмотра документов, Jetstream будет использовать [плагин типографики Tailwind](https://tailwindcss.com/docs/typography-plugin) для преобразования Markdown в красиво отформатированную прозу.
 
-## Email Verification
+## Подтверждение адреса электронной почты
 
-Laravel Jetstream includes support for requiring that a newly registered user verify their email address. However, support for this feature is disabled by default. To enable this feature, you should uncomment the relevant entry in the `features` configuration item of your application's `config/fortify.php` configuration file:
+Laravel Jetstream включает поддержку, требующую, чтобы недавно зарегистрированный пользователь подтвердил свой адрес электронной почты. Однако по умолчанию поддержка этой функции отключена. Чтобы включить эту функцию, Вы должны раскомментировать соответствующую запись в элементе конфигурации `features` конфигурационного файла Вашего приложения `config/fortify.php`:
 
 ```php
 use Laravel\Fortify\Features;
@@ -121,11 +121,11 @@ use Laravel\Fortify\Features;
 ],
 ```
 
-Next, you should ensure that your `App\Models\User` class implements the `Illuminate\Contracts\Auth\MustVerifyEmail` interface. This interface is already imported into this model for you.
+Затем вы должны убедиться, что ваш класс `App\Models\User` реализует интерфейс `Illuminate\Contracts\Auth\MustVerifyEmail`. Этот интерфейс уже импортирован в эту модель для вас.
 
-Once these two setup steps have been completed, newly registered users will receive an email prompting them to verify their email address ownership.
+После завершения этих двух шагов настройки вновь зарегистрированные пользователи получат электронное письмо с предложением подтвердить право собственности на свой адрес электронной почты.
 
 :::tip Laravel Mail
 
-Before using the password reset feature, you should ensure that your Laravel application is configured to [send emails](https://laravel.com/docs/mail). Otherwise, Laravel will not be able to send email verification links to your application's users.
+Перед использованием функции сброса пароля Вы должны убедиться, что Ваше приложение Laravel настроено на [отправку электронных писем](https://laravel.com/docs/mail). В противном случае Laravel не сможет отправлять ссылки для подтверждения по электронной почте пользователям Вашего приложения.
 :::

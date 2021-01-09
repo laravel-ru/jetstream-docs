@@ -53,7 +53,7 @@ use Illuminate\Queue\Events\JobProcessing;
 class AppServiceProvider extends ServiceProvider
 {
     /**
-     * Bootstrap any application services.
+     * Загрузка любых служб приложений.
      *
      * @return void
      */
@@ -73,7 +73,7 @@ class AppServiceProvider extends ServiceProvider
     }
 
     /**
-     * Register the service provider.
+     * Регистрация сервис провайдера.
      *
      * @return void
      */

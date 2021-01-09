@@ -1,30 +1,30 @@
-# Two Factor Authentication
+# Двухфакторная аутентификация
 
 [[toc]]
 
-## Introduction
+## Введение
 
-Laravel Jetstream automatically scaffolds two-factor authentication support for all Jetstream applications. Laravel Jetstream's security features are accessed by the user using the top-right user profile navigation dropdown menu. Within this dashboard, Jetstream scaffolds views that allow the user to enable and manage two-factor authentication for their account.
+Laravel Jetstream автоматически поддерживает двухфакторную аутентификацию для всех приложений Jetstream. Пользователь получает доступ к функциям безопасности Laravel Jetstream с помощью раскрывающегося меню навигации профиля пользователя в правом верхнем углу. На этой панели инструментов Jetstream формирует представления, которые позволяют пользователю включать и управлять двухфакторной аутентификацией для своей учетной записи.
 
-**When a user enables two-factor authentication for their account, they should scan the given QR code using a free TOTP authenticator application such as Google Authenticator. In addition, they should store the listed recovery codes in a secure password manager such as [1Password](https://1password.com).**
+**Когда пользователь включает двухфакторную аутентификацию для своей учетной записи, он должен сканировать данный QR-код с помощью бесплатного приложения для аутентификации TOTP, такого как Google Authenticator. Кроме того, они должны хранить перечисленные коды восстановления в безопасном диспетчере паролей, таком как [1Password](https://1password.com).**
 
-If the user loses access to their mobile device, the Jetstream login page will allow them to authenticate using one of their recovery codes instead of the temporary token provided by their mobile device's authenticator application.
+Если пользователь теряет доступ к своему мобильному устройству, страница входа в Jetstream позволит ему аутентифицироваться с использованием одного из своих кодов восстановления вместо временного токена, предоставленного приложением аутентификатора их мобильного устройства.
 
-![Screenshot of Security](./../../assets/img/security.png)
+![Скриншот безопасности](./../../assets/img/security.png)
 
-## Actions
+## Действия
 
-Most Jetstream features can be customized via action classes. However, for security, Jetstream's two-factor authentication services are encapsulated within Jetstream and should not require customization.
+Большинство функций Jetstream можно настроить с помощью классов действий. Однако в целях безопасности службы двухфакторной аутентификации Jetstream инкапсулированы в Jetstream и не требуют настройки.
 
-## Views / Pages
+## Представления / Страницы
 
-Typically, the two-factor authentication feature's corresponding views and pages should not require customization as they are already feature complete. However, their locations are described below in case you need to make small presentation adjustments to these pages.
+Как правило, соответствующие представления и страницы функции двухфакторной аутентификации не требуют настройки, поскольку они уже являются завершенными. Однако их расположение описано ниже на тот случай, если вам потребуется внести небольшие изменения в презентацию этих страниц.
 
-When using the Livewire stack, the two-factor authentication management view is displayed using the `resources/views/profile/two-factor-authentication-form.blade.php` Blade template. When using the Inertia stack, this view is displayed using the `resources/js/Pages/Profile/TwoFactorAuthenticationForm.vue` template.
+При использовании стека Livewire представление управления двухфакторной аутентификацией отображается с использованием блейд-шаблона `resources/views/profile/two-factor-authentication-form.blade.php`. При использовании стека Inertia это представление отображается с использованием шаблона `resources/js/Pages/Profile/TwoFactorAuthenticationForm.vue`.
 
-## Disabling Two-Factor Authentication
+## Отключение двухфакторной аутентификации
 
-If you would like, you may disable support for two-factor authentication by removing the feature from the `features` array of your application's `config/fortify.php` configuration file:
+При желании Вы можете отключить поддержку двухфакторной аутентификации, удалив эту функцию из массива `features` конфигурационного файла Вашего приложения `config/fortify.php`:
 
 ```php
 use Laravel\Fortify\Features;
