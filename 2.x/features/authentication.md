@@ -2,7 +2,7 @@
 
 [[toc]]
 
-## Introduction
+## Введение
 
 Laravel Jetstream automatically scaffolds the login, two-factor login, registration, password reset, and email verification features for your project, allowing you to start building the features you care about instead of worrying about the nitty-gritty details of user authentication.
 
@@ -16,7 +16,7 @@ When Jetstream is installed, the `config/fortify.php` configuration file is inst
 
 Within the `fortify` configuration file, you can also disable entire features of Fortify, such as the ability to update profile information or passwords.
 
-## Views / Pages
+## Представления / Страницы
 
 When using the Livewire stack, the login view is displayed using the `resources/views/auth/login.blade.php` Blade template. When using the Inertia stack, this view is displayed using the `resources/js/Pages/Auth/Login.vue` template. The directories that contain these views also contain other authentication related views / pages for your application.
 
@@ -30,7 +30,7 @@ All of the authentication view's rendering logic may be customized using the app
 use Laravel\Fortify\Fortify;
 
 /**
- * Bootstrap any application services.
+ * Загрузка любых служб приложений.
  *
  * @return void
  */
@@ -74,7 +74,7 @@ use Illuminate\Support\Facades\Hash;
 use Laravel\Fortify\Fortify;
 
 /**
- * Bootstrap any application services.
+ * Загрузка любых служб приложений.
  *
  * @return void
  */
@@ -139,7 +139,7 @@ In addition to scaffolding views and actions related to login / authentication, 
 Before using the password reset feature, you should ensure that your Laravel application is configured to [send emails](https://laravel.com/docs/mail). Otherwise, Laravel will not be able to send password reset links to your application's users.
 :::
 
-### Actions
+### Действия
 
 As typical of most Jetstream features, the logic executed to satisfy password reset requests can be found in an action class within your application. Remember, actions are granular classes that are responsible for performing a single task related to a Jetstream or Fortify feature.
 
@@ -154,26 +154,26 @@ As you may have noticed, the `App\Actions\Fortify\PasswordValidationRules` trait
 ```php
 use Laravel\Fortify\Rules\Password;
 
-// Require at least 10 characters...
+// Требуется не менее 10 символов...
 (new Password)->length(10)
 
-// Require at least one uppercase character...
+// Требуется хотя бы один символ верхнего регистра...
 (new Password)->requireUppercase()
 
-// Require at least one numeric character...
+// Требуется хотя бы один числовой символ...
 (new Password)->requireNumeric()
 
-// Require at least one special character...
+// Требуется хотя бы один специальный символ...
 (new Password)->requireSpecialCharacter()
 ```
 
-Of course, these methods may be chained to define the password validation rules for your application:
+Конечно, эти методы можно объединить в цепочку, чтобы определить правила проверки пароля для вашего приложения:
 
 ```php
 (new Password)->length(10)->requireSpecialCharacter()
 ```
 
-### Views / Pages
+### Представления / Страницы
 
 Jetstream's password reset feature is implemented using two screens: a screen where the user can request a password reset link and a screen that actually allows the user to reset their password.
 

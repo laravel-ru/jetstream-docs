@@ -2,13 +2,13 @@
 
 [[toc]]
 
-## Introduction
+## Введение
 
 Laravel Jetstream's profile management features are accessed by the user using the top-right user profile navigation dropdown menu. Jetstream scaffolds views and actions that allow the user to update their name, email address, and, optionally, their profile photo.
 
 ![Screenshot of Profile Management](./../../assets/img/profile-management.png)
 
-## Actions
+## Действия
 
 As typical of most Jetstream features, the logic executed to satisfy profile update requests can be found in an action class within your application. Specifically, the `App\Actions\Fortify\UpdateUserProfileInformation` class will be invoked when the user updates their profile. This action is responsible for validating the input and updating the user's profile information.
 
@@ -19,7 +19,7 @@ Therefore, any customizations you wish to make to your application's management 
 If you need to manage additional information about the user, do not feel obligated to add additional to the "Profile Information" card within your Jetstream application's UI. You are free to add additional UI elements and forms to user's profile dashboard that are specific to the information you wish to manage.
 :::
 
-## Views / Pages
+## Представления / Страницы
 
 When using the Livewire stack, the user's profile information form is displayed using the `resources/views/profile/update-profile-information-form.blade.php` Blade template. When using the Inertia stack, this view is displayed using the `resources/js/Pages/Profile/UpdateProfileInformationForm.vue` template.
 

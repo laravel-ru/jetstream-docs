@@ -2,7 +2,7 @@
 
 [[toc]]
 
-## Introduction
+## Введение
 
 The Inertia stack provided by Jetstream uses [Vue.js](https://vuejs.org) as its templating language. Building an Inertia application is a lot like building a typical Vue application; however, you will use Laravel's router instead of Vue router. Inertia is a small library that allows you to render single-file Vue components from your Laravel backend by providing the name of the component and the data that should be hydrated into that component's "props".
 
@@ -50,7 +50,7 @@ use Illuminate\Http\Request;
 use Laravel\Jetstream\Jetstream;
 
 /**
- * Bootstrap any application services.
+ * Загрузка любых служб приложений.
  *
  * @return void
  */

@@ -2,7 +2,7 @@
 
 [[toc]]
 
-## Introduction
+## Введение
 
 Laravel Jetstream automatically scaffolds two-factor authentication support for all Jetstream applications. Laravel Jetstream's security features are accessed by the user using the top-right user profile navigation dropdown menu. Within this dashboard, Jetstream scaffolds views that allow the user to enable and manage two-factor authentication for their account.
 
@@ -12,11 +12,11 @@ If the user loses access to their mobile device, the Jetstream login page will a
 
 ![Screenshot of Security](./../../assets/img/security.png)
 
-## Actions
+## Действия
 
 Most Jetstream features can be customized via action classes. However, for security, Jetstream's two-factor authentication services are encapsulated within Jetstream and should not require customization.
 
-## Views / Pages
+## Представления / Страницы
 
 Typically, the two-factor authentication feature's corresponding views and pages should not require customization as they are already feature complete. However, their locations are described below in case you need to make small presentation adjustments to these pages.
 

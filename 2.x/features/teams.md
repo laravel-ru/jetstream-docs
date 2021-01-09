@@ -2,7 +2,7 @@
 
 [[toc]]
 
-## Introduction
+## Введение
 
 If you installed Jetstream using the `--teams` option, your application will be scaffolded to support team creation and management.
 
@@ -19,11 +19,11 @@ Jetstream's team scaffolding and opinions may not work for every application. If
 
 The team creation view is accessed via the top-right user navigation dropdown menu.
 
-### Actions
+### Действия
 
 Like many other Jetstream features, team creation and deletion logic may be customized by modifying the relevant action classes within your `app/Actions/Jetstream` directory. These actions include `CreateTeam`, `UpdateTeamName`, and `DeleteTeam`. Each of these actions is invoked when their corresponding task is performed by the user in the application's UI. You are free to modify these actions as required based on your application's needs.
 
-### Views / Pages
+### Представления / Страницы
 
 When using the Livewire stack, the team creation view is displayed using the `resources/views/teams/create-team-form.blade.php` Blade template. When using the Inertia stack, this view is displayed using the `resources/js/Pages/Teams/CreateTeamForm.vue` template. Additional input fields that are specified on the team creation forms will be provided to the `App\Actions\Jetstream\CreateTeam` action class when the user creates a team.
 
@@ -121,7 +121,7 @@ This action is responsible for validating that the user can actually be added to
 
 Team member removal may be customized by modifying the `App\Actions\Jetstream\RemoveTeamMember` action class.
 
-### Member Management Views / Pages
+### Member Management Представления / Страницы
 
 When using the Livewire stack, the team member manager view is displayed using the `resources/views/teams/team-member-manager.blade.php` Blade template. When using the Inertia stack, this view is displayed using the `resources/js/Pages/Teams/TeamMemberManager.vue` template. Generally, these templates should not require customization.
 

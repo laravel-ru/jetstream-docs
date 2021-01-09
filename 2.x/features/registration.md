@@ -2,13 +2,13 @@
 
 [[toc]]
 
-## Introduction
+## Введение
 
 Of course, before anyone can use your application, they need to create an account. Thankfully, Jetstream provides a registration view and a corresponding action that handles user registrations so that you can focus on building your application.
 
 ![Screenshot of Authentication](./../../assets/img/authentication.png)
 
-## Actions
+## Действия
 
 As typical of most Jetstream features, the logic executed to satisfy registration requests can be found in an action class within your application. Remember, actions are granular classes that are responsible for performing a single task related to a Jetstream or Fortify feature.
 
@@ -23,26 +23,26 @@ As you may have noticed, the `App\Actions\Fortify\PasswordValidationRules` trait
 ```php
 use Laravel\Fortify\Rules\Password;
 
-// Require at least 10 characters...
+// Требуется не менее 10 символов...
 (new Password)->length(10)
 
-// Require at least one uppercase character...
+// Требуется хотя бы один символ верхнего регистра...
 (new Password)->requireUppercase()
 
-// Require at least one numeric character...
+// Требуется хотя бы один числовой символ...
 (new Password)->requireNumeric()
 
-// Require at least one special character...
+// Требуется хотя бы один специальный символ...
 (new Password)->requireSpecialCharacter()
 ```
 
-Of course, these methods may be chained to define the password validation rules for your application:
+Конечно, эти методы можно объединить в цепочку, чтобы определить правила проверки пароля для вашего приложения:
 
 ```php
 (new Password)->length(10)->requireSpecialCharacter()
 ```
 
-## Views / Pages
+## Представления / Страницы
 
 When using the Livewire stack, the registration view is displayed using the `resources/views/auth/register.blade.php` Blade template. When using the Inertia stack, this view is displayed using the `resources/js/Pages/Auth/Register.vue` template. Any additional fields you add to these pages will be available via the `$input` array passed to the `App\Actions\Fortify\CreateNewUser` action.
 
@@ -56,7 +56,7 @@ All of Fortify's authentication view rendering logic may be customized using the
 use Laravel\Fortify\Fortify;
 
 /**
- * Bootstrap any application services.
+ * Загрузка любых служб приложений.
  *
  * @return void
  */
@@ -127,5 +127,5 @@ Once these two setup steps have been completed, newly registered users will rece
 
 :::tip Laravel Mail
 
-Before using the password reset feature, you should ensure that your Laravel application is configured to [send emails](https://laravel.com/docs/mail). Otherwise, Laravel will not be able to send email verification links to your application's users.
+Перед использованием функции сброса пароля Вы должны убедиться, что Ваше приложение Laravel настроено на [отправку электронных писем](https://laravel.com/docs/mail). В противном случае Laravel не сможет отправлять ссылки для подтверждения по электронной почте пользователям Вашего приложения.
 :::

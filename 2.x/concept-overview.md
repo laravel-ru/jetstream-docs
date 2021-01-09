@@ -2,7 +2,7 @@
 
 [[toc]]
 
-## Introduction
+## Введение
 
 Laravel Jetstream's architecture is a little different than other Laravel application starter kits such as [Laravel Breeze](https://laravel.com/docs/starter-kits). In this documentation, we'll cover some of the high-level concepts that will help you understand how Laravel Jetstream is constructed.
 
@@ -20,13 +20,13 @@ When Jetstream is installed, a `config/fortify.php` configuration file is instal
 
 Within the `fortify` configuration file, you can also disable entire features of Fortify, such as the ability to update profile information or passwords.
 
-## Actions
+## Действия
 
 In contrast to [Laravel Breeze](https://laravel.com/docs/starter-kits), Laravel Jetstream does not publish controllers or routes to your application. Instead, Jetstream's functionality is customized via "Action" classes. During the Jetstream installation process, actions are published to your application's `app/Actions` directory.
 
 Action classes typically perform a single action and correspond to a single Jetstream or Fortify feature, such as creating a team or deleting a user. You are free to customize these classes if you would like to tweak the backend behavior of Jetstream. Each of the relevant actions published by Jetstream will be discussed within the feature's corresponding documentation.
 
-## Views / Pages
+## Представления / Страницы
 
 During installation, Jetstream will publish a variety of views and classes to your application. When using Livewire, views will be published to your application's `resources/views` directory. When using Inertia, "Pages" will be published to your `resources/js/Pages` directory.
 

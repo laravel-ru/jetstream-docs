@@ -2,7 +2,7 @@
 
 [[toc]]
 
-## Introduction
+## Введение
 
 After installing Jetstream, you may wonder how to actually start building your application. Thankfully, since Jetstream handles the configuration of all of the initial authentication and application scaffolding, you can get started right away!
 

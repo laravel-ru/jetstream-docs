@@ -2,13 +2,13 @@
 
 [[toc]]
 
-## Introduction
+## Введение
 
 Laravel Jetstream's security features are accessed by the user using the top-right user profile navigation dropdown menu. Within this dashboard, Jetstream scaffolds views that allow the user to update the password associated with their account.
 
 ![Screenshot of Security](./../../assets/img/security.png)
 
-## Actions
+## Действия
 
 Like most of Jetstream's features, the underlying logic used to implement the feature may be customized by modifying a corresponding action class.
 
@@ -23,26 +23,26 @@ As you may have noticed, the `App\Actions\Fortify\PasswordValidationRules` trait
 ```php
 use Laravel\Fortify\Rules\Password;
 
-// Require at least 10 characters...
+// Требуется не менее 10 символов...
 (new Password)->length(10)
 
-// Require at least one uppercase character...
+// Требуется хотя бы один символ верхнего регистра...
 (new Password)->requireUppercase()
 
-// Require at least one numeric character...
+// Требуется хотя бы один числовой символ...
 (new Password)->requireNumeric()
 
-// Require at least one special character...
+// Требуется хотя бы один специальный символ...
 (new Password)->requireSpecialCharacter()
 ```
 
-Of course, these methods may be chained to define the password validation rules for your application:
+Конечно, эти методы можно объединить в цепочку, чтобы определить правила проверки пароля для вашего приложения:
 
 ```php
 (new Password)->length(10)->requireSpecialCharacter()
 ```
 
-## Views / Pages
+## Представления / Страницы
 
 Typically, the views and pages for these features should not require customization, as they are already feature complete. However, their locations are described below in case you need to make small presentation adjustments to these pages.
 
