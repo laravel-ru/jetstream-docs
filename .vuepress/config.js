@@ -11,7 +11,7 @@ module.exports = {
         activeHeaderLinks: false,
         searchPlaceholder: 'Press / to search',
         lastUpdated: false, // string | boolean
-        sidebarDepth: 1,
+        sidebarDepth: 0,
 
         repo: 'laravel/jetstream',
 
@@ -24,7 +24,7 @@ module.exports = {
         ],
 
         sidebar: {
-            '/1.x/': require('./1.x')
+            '/2.x/': require('./2.x')
         },
     },
 }
