@@ -4,16 +4,16 @@
 
 ## Введение
 
-The Inertia stack provided by Jetstream uses [Vue.js](https://vuejs.org) as its templating language. Building an Inertia application is a lot like building a typical Vue application; however, you will use Laravel's router instead of Vue router. Inertia is a small library that allows you to render single-file Vue components from your Laravel backend by providing the name of the component and the data that should be hydrated into that component's "props".
+Стек Inertia, предоставляемый Jetstream, использует [Vue.js](https://vuejs.org) в качестве языка шаблонов. Создание приложения Inertia очень похоже на создание типичного приложения Vue; однако Вы будете использовать маршрутизатор Laravel вместо маршрутизатора Vue. Inertia - это небольшая библиотека, которая позволяет Вам отображать однофайловые компоненты Vue из Вашего бэкэнда Laravel, предоставляя имя компонента и данные, которые должны быть гидратированы в «свойствах» этого компонента.
 
-In other words, this stack gives you the full power of Vue.js without the complexity of client-side routing. The Inertia stack is a great choice if you are comfortable with and enjoy using Vue.js as your templating language. When using Inertia, your application's routes will respond by rendering an Inertia "page". This looks very similar to returning a Laravel Blade view:
+Другими словами, этот стек дает Вам всю мощь Vue.js без сложной маршрутизации на стороне клиента. Стек Inertia - отличный выбор, если Вам комфортно и нравится использовать Vue.js в качестве языка шаблонов. При использовании Inertia маршруты Вашего приложения будут отображать "страницу" Inertia. Это очень похоже на возвращение представления Laravel Blade:
 
 ```php
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 /**
- * Show the general profile settings screen.
+ * Показать экран общих настроек профиля.
  *
  * @param  \Illuminate\Http\Request  $request
  * @return \Inertia\Response
@@ -26,24 +26,24 @@ public function show(Request $request)
 }
 ```
 
-When using the Inertia stack, Jetstream has some unique features that you should be aware of. We will discuss each of these features below.
+При использовании стека Inertia Jetstream обладает некоторыми уникальными функциями, о которых Вам следует знать. Мы обсудим каждую из этих функций ниже.
 
-:::tip Inertia Documentation
+:::tip Документация Inertia
 
-Before using the Inertia stack, you are strongly encouraged to review the entire [Inertia documentation](https://inertiajs.com)
+Перед использованием стека Inertia настоятельно рекомендуется просмотреть всю [документацию Inertia](https://inertiajs.ru)
 :::
 
-## Components
+## Компоненты
 
-When we created the Jetstream Inertia stack, a variety of Vue components (buttons, panels, inputs, modals) were created to assist in creating UI consistency and ease of use. You are free to use or not use these components. All of these components are located within your application's `resources/js/Jetstream` directory.
+Когда мы создавали стек Jetstream Inertia, были созданы различные компоненты Vue (кнопки, панели, входы, модальные окна), чтобы помочь в обеспечении согласованности и простоты использования пользовательского интерфейса. Вы можете использовать или не использовать эти компоненты. Все эти компоненты находятся в каталоге Вашего приложения `resources/js/Jetstream`.
 
-You may gain insight into how to use these components by reviewing their usage within Jetstream's existing pages located within your application's `resources/js/Pages` directory.
+Вы можете получить представление о том, как использовать эти компоненты, просмотрев их использование на существующих страницах Jetstream, расположенных в каталоге Вашего приложения `resources/js/Pages`.
 
-## Customizing Jetstream's Page Rendering
+## Настройка рендеринга страницы Jetstream
 
-Some of Jetstream's Inertia pages, such as `Teams/Show` and `Profile/Show` are rendered from within Jetstream itself. However, you may need to pass additional data to these pages while building your application. Therefore, Jetstream allows you to customize the data / props passed to these pages using the `Jetstream::inertia()->whenRendering` method.
+Некоторые страницы Inertia Jetstream, такие как `Teams/Show` и `Profile/Show`, отображаются внутри самого Jetstream. Однако Вам может потребоваться передать на эти страницы дополнительные данные при создании приложения. Следовательно, Jetstream позволяет настраивать данные/свойства, передаваемые на эти страницы, с помощью метода `Jetstream::inertia()->whenRendering`.
 
-This method accepts the name of the page you wish to customize and a closure. The closure will receive the incoming HTTP request and an array of the default data that would typically be sent to the page. You are welcome to customize or add new array elements to the data as necessary. Typically, you should call this method from within the `boot` method of your `App\Providers\JetstreamServiceProvider` class:
+Этот метод принимает имя страницы, которую Вы хотите настроить и замкнуть. Замыкание получит входящий HTTP-запрос и массив данных по умолчанию, которые обычно отправляются на страницу. Вы можете при необходимости настроить или добавить новые элементы массива к данным. Как правило, этот метод следует вызывать из метода `boot` Вашего класса `App\Providers\JetstreamServiceProvider`:
 
 ```php
 use Illuminate\Http\Request;
@@ -62,44 +62,44 @@ public function boot()
         'Profile/Show',
         function (Request $request, array $data) {
             return array_merge($data, [
-                // Custom data...
+                // Пользовательские данные...
             ]);
         }
     );
 }
 ```
 
-:::tip Authentication View Customization
+:::tip Настройка представления аутентификации
 
-To learn how to customize the Inertia pages rendered by Jetstream's authentication related routes such as login, registration, and password reset, check out the [authentication documentation](./../features/authentication.md#customizing-inertia-authentication-views).
+Чтобы узнать, как настроить страницы Inertia, отображаемые связанными с аутентификацией маршрутами Jetstream, такими как вход, регистрация и сброс пароля, ознакомьтесь с [документацией по аутентификации](./../features/authentication.md#customizing-inertia-authentication-views).
 :::
 
-## Modals
+## Модальные окна
 
-Jetstream's Inertia stack also includes two modal components: `DialogModal` and `ConfirmationModal`. The `ConfirmationModal` may be used when confirming destructive actions such as the deletion of resources, while the `DialogModal` is a more generic modal window that may be used at any time.
+Стек Inertia в Jetstream также включает два модальных компонента: `DialogModal` и `ConfirmationModal`. `ConfirmationModal` может использоваться при подтверждении деструктивных действий, таких как удаление ресурсов, в то время как `DialogModal` является более общим модальным окном, которое можно использовать в любое время.
 
-To illustrate the use of modals, consider the following modal that confirms a user would like to delete their account:
+Чтобы проиллюстрировать использование модальных окон, рассмотрим следующее модальное окно, которое подтверждает, что пользователь желает удалить свою учетную запись:
 
 ```html
 <jet-confirmation-modal :show="confirmingUserDeletion" @close="confirmingUserDeletion = false">
     <template #title>
-        Delete Account
+        Удалить аккаунт
     </template>
 
     <template #content>
-        Are you sure you want to delete your account? Once your account is deleted, all of its resources and data will be permanently deleted.
+        Вы уверены, что хотите удалить свою учетную запись? После удаления Вашей учетной записи все ее ресурсы и данные будут удалены без возможности восстановления.
     </template>
 
     <template #footer>
         <jet-secondary-button @click.native="confirmingUserDeletion = false">
-            Nevermind
+            Ничего
         </jet-secondary-button>
 
         <jet-danger-button class="ml-2" @click.native="deleteTeam" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-            Delete Account
+            Удалить аккаунт
         </jet-danger-button>
     </template>
 </jet-confirmation-modal>
 ```
 
-As you can see, the modal's open / close state is determined by a `show` property that is declared on the component. The modal's contents may be specified by hydrating three slots: `title`, `content`, and `footer`.
+Как видите, состояние открытия / закрытия модального окна определяется свойством `show`, которое объявлено в компоненте. Содержимое модального окна может быть определено путем гидратации трех слотов: `title`, `content` и `footer`.
