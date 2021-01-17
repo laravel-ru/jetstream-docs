@@ -1,18 +1,18 @@
-# Installation
+# Установка
 
 [[toc]]
 
-## Installing Jetstream
+## Установка Jetstream
 
-You may use Composer to install Jetstream into your new Laravel project:
+Вы можете использовать Composer для установки Jetstream в свой новый проект Laravel:
 
 ```bash
 composer require laravel/jetstream
 ```
 
-After installing the Jetstream package, you may execute the `jetstream:install` Artisan command. This command accepts the name of the stack you prefer (`livewire` or `inertia`). In addition, you may use the `--teams` switch to enable team support. **You are highly encouraged to read through the entire documentation of [Livewire](https://laravel-livewire.com) or [Inertia](https://inertiajs.com) before beginning your Jetstream project.**
+После установки пакета Jetstream Вы можете выполнить Artisan-команду `jetstream:install`. Эта команда принимает имя стека, которое Вы предпочитаете (`livewire` или `inertia`). Кроме того, Вы можете использовать переключатель `--teams`, чтобы включить поддержку команды. **Мы настоятельно рекомендуем Вам прочитать всю документацию [Livewire](https://laravel-livewire.com) или  [Inertia](https://inertiajs.ru) перед тем, как начать свой проект Jetstream.**
 
-#### Install Jetstream With Livewire
+#### Установите Jetstream с Livewire
 
 ```bash
 php artisan jetstream:install livewire
@@ -20,7 +20,7 @@ php artisan jetstream:install livewire
 php artisan jetstream:install livewire --teams
 ```
 
-#### Or, Install Jetstream With Inertia
+#### Или, Установите Jetstream с Inertia
 
 ```bash
 php artisan jetstream:install inertia
@@ -28,9 +28,9 @@ php artisan jetstream:install inertia
 php artisan jetstream:install inertia --teams
 ```
 
-### Finalizing The Installation
+### Завершение установки
 
-After installing Jetstream, you should install and build your NPM dependencies and migrate your database:
+После установки Jetstream следует установить и построить зависимости NPM и перенести базу данных:
 
 ```bash
 npm install
@@ -38,25 +38,25 @@ npm run dev
 php artisan migrate
 ```
 
-## Application Logo
+## Логотип приложения
 
-After installing Jetstream, you may have noticed that the Jetstream logo is utilized on Jetstream's authentication pages as well as your application's top navigation bar. You may easily customize the logo by modifying two Jetstream components.
+После установки Jetstream Вы могли заметить, что логотип Jetstream используется на страницах аутентификации Jetstream, а также на верхней панели навигации Вашего приложения. Вы можете легко настроить логотип, изменив два компонента Jetstream.
 
 ### Livewire
 
-If you are using the Livewire stack, you should first publish the Livewire stack's Blade components:
+Если Вы используете стек Livewire, Вы должны сначала опубликовать компоненты Blade стека Livewire:
 
 ```bash
 php artisan vendor:publish --tag=jetstream-views
 ```
 
-Next, you should customize the SVGs located in the `resources/views/vendor/jetstream/components/application-logo.blade.php`, `resources/views/vendor/jetstream/components/authentication-card-logo.blade.php`, and `resources/views/vendor/jetstream/components/application-mark.blade.php` components.
+Затем Вы должны настроить SVG, расположенные в файлах компоненты `resources/views/vendor/jetstream/components/application-logo.blade.php`, `resources/views/vendor/jetstream/components/authentication-card-logo.blade.php` и `resources/views/vendor/jetstream/components/application-mark.blade.php`.
 
 ### Inertia
 
-If you are using the Inertia stack, you should customize the SVGs located in `resources/js/Jetstream/AuthenticationCardLogo.vue`, `resources/js/Jetstream/ApplicationLogo.vue`, and `resources/js/Jetstream/ApplicationMark.vue`.
+Если Вы используете стек Inertia, Вам следует настроить SVG, расположенные в `resources/js/Jetstream/AuthenticationCardLogo.vue`, `resources/js/Jetstream/ApplicationLogo.vue` и `resources/js/Jetstream/ApplicationMark.vue`.
 
-After customizing these components, you should rebuild your assets:
+После настройки этих компонентов Вы должны перестроить свои асеты:
 
 ```bash
 npm run dev
