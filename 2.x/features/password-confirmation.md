@@ -20,21 +20,21 @@ Jetstream предлагает два подхода к подтверждени
 
 Эта форма подтверждения пароля отображает модальное окно, которое позволяет пользователю подтвердить свой пароль перед выполнением предполагаемого запроса.
 
-## Перенаправление подтверждение пароля
+## Подтверждение пароля перенаправления
 
-The following documentation will discuss how to use redirect based password confirmation in Jetstream. Redirect based password confirmation is typically used when the user needs to confirm their password before accessing an entire screen that is rendered by your application, such as a billing settings screen.
+В следующей документации обсуждается, как использовать подтверждение пароля на основе перенаправления в Jetstream. Подтверждение пароля на основе перенаправления обычно используется, когда пользователю необходимо подтвердить свой пароль перед доступом ко всему экрану, отображаемому Вашим приложением, например экрану настроек биллинга.
 
-This form of password confirmation redirects the user to a dedicated password confirmation screen where they must confirm their password before being redirected to their intended destination.
+Эта форма подтверждения пароля перенаправляет пользователя на специальный экран подтверждения пароля, где он должен подтвердить свой пароль перед перенаправлением в предполагаемое место назначения.
 
-![Screenshot of Password Confirmation](./../../assets/img/redirect-confirm.png)
+![Скриншот подтверждения пароля](./../../assets/img/redirect-confirm.png)
 
-### Redirect Password Confirmation Via Livewire
+### Подтверждение пароля перенаправления через Livewire
 
-#### Protecting Routes
+#### Защита маршрутов
 
-To implement password confirmation via redirect to a password confirmation screen, you should ensure that the route that will render the view that requires password confirmation and any routes that perform the confirmed actions are assigned the `password.confirm` middleware.
+Чтобы реализовать подтверждение пароля через перенаправление на экран подтверждения пароля, Вы должны убедиться, что маршрут, который будет отображать представление, требующее подтверждения пароля, и любые маршруты, которые выполняют подтвержденные действия, назначены мидлвару `password.confirm`.
 
-This middleware is included with the default installation of Laravel and will ensure that the user is redirected to your application's password confirmation screen if they attempt to access the routes without confirming their password:
+Этот мидлвар входит в стандартную установку Laravel и гарантирует, что пользователь будет перенаправлен на экран подтверждения пароля Вашего приложения, если они попытаются получить доступ к маршрутам без подтверждения своего пароля:
 
 ```php
 Route::get('/billing', function () {
@@ -46,13 +46,13 @@ Route::post('/billing', function () {
 })->middleware(['password.confirm']);
 ```
 
-That view that renders the Livewire stack's password confirmation screen is located at `resources/views/auth/confirm-password.blade.php`. Generally, this view should not need customization; however, you are free to make general presentational tweaks to this page based on your own application's design.
+Это представление, которое отображает экран подтверждения пароля стека Livewire, находится по адресу `resources/views/auth/confirm-password.blade.php`. Как правило, это представление не требует настройки; однако Вы можете вносить общие изменения в презентацию этой страницы на основе дизайна вашего собственного приложения.
 
-#### Ensuring The Password Has Been Confirmed
+#### Убедитесь, что пароль подтвержден
 
-Next, Livewire components that contain an action that should require password confirmation before being invoked should use the `Laravel\Jetstream\ConfirmsPasswords` trait.
+Затем компоненты Livewire, которые содержат действие, которое должно требовать подтверждения пароля перед вызовом, должны использовать трейт `Laravel\Jetstream\ConfirmsPasswords`.
 
-After adding this trait to a component, you should call the `ensurePasswordIsConfirmed` method within any Livewire action that requires password confirmation. This should be done at the very beginning of the relevant action method:
+После добавления этой характеристики в компонент Вы должны вызвать метод `ensurePasswordIsConfirmed` в любом действии Livewire, требующем подтверждения пароля. Делать это нужно в самом начале соответствующего метода действий:
 
 ```php
 /**
@@ -68,16 +68,16 @@ public function enableAdminMode()
 }
 ```
 
-:::warning Password Confirmation Expiration
+:::warning Срок действия подтверждения пароля
 
-Once the user has confirmed their password, they will not be required to re-enter their password until the number of seconds defined by your application's `auth.password_timeout` configuration option has elapsed:
+После того, как пользователь подтвердит свой пароль, ему не потребуется повторно вводить пароль, пока не истечет количество секунд, определенное параметром конфигурации Вашего приложения `auth.password_timeout`:
 :::
 
-### Redirect Password Confirmation Via Inertia
+### Подтверждение пароля перенаправления через Inertia
 
-To implement password confirmation via redirect to a password confirmation screen, you should ensure that the route that will render the view that requires password confirmation and any routes that perform the confirmed actions are assigned the `password.confirm` middleware.
+Чтобы реализовать подтверждение пароля через перенаправление на экран подтверждения пароля, Вы должны убедиться, что маршрут, который будет отображать представление, требующее подтверждения пароля, и любые маршруты, которые выполняют подтвержденные действия, назначены мидлвару `password.confirm`.
 
-This middleware is included with the default installation of Laravel and will ensure that the user is redirected to your application's password confirmation screen if they attempt to access the routes without confirming their password:
+Этот мидлвар входит в стандартную установку Laravel и гарантирует, что пользователь будет перенаправлен на экран подтверждения пароля Вашего приложения, если они попытаются получить доступ к маршрутам без подтверждения своего пароля:
 
 ```php
 Route::get('/billing', function () {
@@ -89,11 +89,11 @@ Route::post('/billing', function () {
 })->middleware(['password.confirm']);
 ```
 
-That page that renders the Inertia's stack's password confirmation screen is located at `resources/js/Pages/Auth/ConfirmPassword.vue`. Generally, this page should not need customization; however, you are free to make general presentational tweaks to this page based on your own application's design.
+Эта страница, которая отображает экран подтверждения пароля стека Inertia, находится в `resources/js/Pages/Auth/ConfirmPassword.vue`. Как правило, эту страницу не нужно настраивать; однако Вы можете вносить общие изменения в презентацию этой страницы на основе дизайна Вашего собственного приложения.
 
-:::warning Password Confirmation Expiration
+:::warning Срок действия подтверждения пароля
 
-Once the user has confirmed their password, they will not be required to re-enter their password until the number of seconds defined by your application's `auth.password_timeout` configuration option has elapsed:
+После того, как пользователь подтвердит свой пароль, ему не потребуется повторно вводить пароль, пока не истечет количество секунд, определенное параметром конфигурации Вашего приложения `auth.password_timeout`:
 :::
 
 ## Модальное подтверждение пароля
