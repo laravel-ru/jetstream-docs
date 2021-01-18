@@ -50,7 +50,7 @@ That view that renders the Livewire stack's password confirmation screen is loca
 
 #### Ensuring The Password Has Been Confirmed
 
-Next, Livewire components that contains an action that should require password confirmation before being invoked should use the `Laravel\Jetstream\ConfirmsPasswords` trait.
+Next, Livewire components that contain an action that should require password confirmation before being invoked should use the `Laravel\Jetstream\ConfirmsPasswords` trait.
 
 After adding this trait to a component, you should call the `ensurePasswordIsConfirmed` method within any Livewire action that requires password confirmation. This should be done at the very beginning of the relevant action method:
 
@@ -70,7 +70,7 @@ public function enableAdminMode()
 
 :::warning Password Confirmation Expiration
 
-Once the user has confirmed their password, they will not be required to re-enter their password until the number of seconds defined by the your application's `auth.password_timeout` configuration option have elapsed:
+Once the user has confirmed their password, they will not be required to re-enter their password until the number of seconds defined by your application's `auth.password_timeout` configuration option has elapsed:
 :::
 
 ### Redirect Password Confirmation Via Inertia
@@ -93,7 +93,7 @@ That page that renders the Inertia's stack's password confirmation screen is loc
 
 :::warning Password Confirmation Expiration
 
-Once the user has confirmed their password, they will not be required to re-enter their password until the number of seconds defined by the your application's `auth.password_timeout` configuration option have elapsed:
+Once the user has confirmed their password, they will not be required to re-enter their password until the number of seconds defined by your application's `auth.password_timeout` configuration option has elapsed:
 :::
 
 ## Модальное подтверждение пароля
@@ -142,7 +142,7 @@ public function enableAdminMode()
 
 :::warning Срок действия подтверждения пароля
 
-После того, как пользователь подтвердит свой пароль, ему не потребуется повторно вводить пароль до тех пор, пока не истечет количество секунд, определенное параметром конфигурации Вашего приложения `auth.password_timeout`:
+После того, как пользователь подтвердит свой пароль, ему не потребуется повторно вводить пароль, пока не истечет количество секунд, определенное параметром конфигурации Вашего приложения `auth.password_timeout`:
 :::
 
 ### Модальное подтверждение пароля через Inertia
@@ -184,12 +184,12 @@ Route::post('/admin-mode', function () {
 
 :::warning Срок действия подтверждения пароля
 
-После того, как пользователь подтвердит свой пароль, ему не потребуется повторно вводить пароль до тех пор, пока не истечет количество секунд, определенное параметром конфигурации Вашего приложения `auth.password_timeout`:
+После того, как пользователь подтвердит свой пароль, ему не потребуется повторно вводить пароль, пока не истечет количество секунд, определенное параметром конфигурации Вашего приложения `auth.password_timeout`:
 :::
 
 ## Настройка способа подтверждения паролей
 
-Иногда Вам может потребоваться настроить способ проверки пароля пользователя во время подтверждения. Для этого Вы можете использовать метод `Fortify::confirmPasswordsUsing`. Этот метод принимает замыкание, которое получает экземпляр аутентифицированного пользователя и поле ввода запроса `password`. Замыкание должно вернуть `true`, если пароль действителен для данного пользователя. Обычно этот метод следует вызывать из метода `boot` Вашего `JetstreamServiceProvider`:
+Иногда Вам может потребоваться настроить способ проверки пароля пользователя во время подтверждения. Для этого Вы можете использовать метод `Fortify::confirmPasswordsUsing`. Этот метод принимает закрытие, которое получает экземпляр аутентифицированного пользователя и поле ввода запроса `password`. Замыкание должно вернуть `true`, если пароль действителен для данного пользователя. Обычно этот метод следует вызывать из метода `boot` Вашего `JetstreamServiceProvider`:
 
 ```php
 use Illuminate\Support\Facades\Hash;
