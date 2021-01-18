@@ -87,7 +87,7 @@ A user may switch their current team via the "team switcher" menu available with
 
 ### The Team Object
 
-The team object that is accessed via `$user->currentTeam` or Jetstream's other team related Eloquent queries provides a variety of useful methods for inspecting the team's attributes and relationships:
+The team object that is accessed via `$user->currentTeam` or Jetstream's other team-related Eloquent queries provides a variety of useful methods for inspecting the team's attributes and relationships:
 
 ```php
 // Access the team's owner...
@@ -187,8 +187,7 @@ Of course, you will need a way to authorize that incoming requests initiated by 
 **There is typically not a need to inspect a user's role. You only need to inspect that the user has a given granular permission.** Roles are simply a presentational concept used to group granular permissions. Typically, you will execute calls to this method within your application's [authorization policies](https://laravel.com/docs/authorization):
 
 ```php
-return $request->user()->hasTeamPermission($server->team, 'server:update') &&
-       $request->user()->tokenCan('server:update');
+return $user->hasTeamPermission($server->team, 'server:update');
 ```
 
 ### Combining Team Permissions With API Permissions
