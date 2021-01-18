@@ -1,21 +1,21 @@
-# Browser Sessions
+# Сессии браузера
 
 [[toc]]
 
 ## Введение
 
-Laravel Jetstream's security features are accessed by the user using the top-right user profile navigation dropdown menu. Within this dashboard, Jetstream scaffolds views that allow the user to view the browser sessions associated with their account. In addition, the user may "logout" browser sessions other than the one being used by the device they are currently using.
+Пользователь получает доступ к функциям безопасности Laravel Jetstream с помощью раскрывающегося меню навигации профиля пользователя в правом верхнем углу. На этой панели управления Jetstream формирует представления, которые позволяют пользователю просматривать сеансы браузера, связанные с его учетной записью. Кроме того, пользователь может «выйти из сеанса» браузера, отличного от того, который используется устройством, которое он использует в данный момент.
 
-This feature utilizes Laravel's built-in `Illuminate\Session\Middleware\AuthenticateSession` middleware to safely logout other browser sessions that are authenticated as the current user.
+Эта функция использует встроенный мидлвар слоя `Illuminate\Session\Middleware\AuthenticateSession` для безопасного выхода из других сеансов браузера, которые аутентифицированы как текущий пользователь.
 
-![Screenshot of Browser Sessions](./../../assets/img/browser-sessions.png)
+![Скриншот сеансов браузера](./../../assets/img/browser-sessions.png)
 
 ## Действия
 
-Most Jetstream features can be customized via action classes. However, for security, Jetstream's browser session services are encapsulated within Jetstream and should not require customization.
+Большинство функций Jetstream можно настроить с помощью классов действий. Однако в целях безопасности службы сеансов браузера Jetstream инкапсулированы в Jetstream и не требуют настройки.
 
 ## Представления / Страницы
 
-Typically, the browser session feature's corresponding views and pages should not require customization as they are already feature complete. However, their locations are described below in case you need to make small presentation adjustments to these pages.
+Как правило, соответствующие представления и страницы функции сеанса браузера не требуют настройки, поскольку они уже являются завершенными. Однако их расположение описано ниже на тот случай, если Вам потребуется внести небольшие изменения в презентацию этих страниц.
 
-When using the Livewire stack, the browser session management view is displayed using the `resources/views/profile/logout-other-browser-sessions-form.blade.php` Blade template. When using the Inertia stack, this view is displayed using the `resources/js/Pages/Profile/LogoutOtherBrowserSessionsForm.vue` template.
+При использовании стека Livewire представление управления сеансом браузера отображается с использованием блейд-шаблона `resources/views/profile/logout-other-browser-sessions-form.blade.php`. При использовании стека Inertia это представление отображается с использованием шаблона `resources/js/Pages/Profile/LogoutOtherBrowserSessionsForm.vue`.

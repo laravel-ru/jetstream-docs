@@ -1,24 +1,24 @@
-# Password Update
+# Обновление пароля
 
 [[toc]]
 
 ## Введение
 
-Laravel Jetstream's security features are accessed by the user using the top-right user profile navigation dropdown menu. Within this dashboard, Jetstream scaffolds views that allow the user to update the password associated with their account.
+Пользователь получает доступ к функциям безопасности Laravel Jetstream с помощью раскрывающегося меню навигации профиля пользователя в правом верхнем углу. На этой панели инструментов Jetstream формирует представления, которые позволяют пользователю обновлять пароль, связанный с его учетной записью.
 
 ![Screenshot of Security](./../../assets/img/security.png)
 
 ## Действия
 
-Like most of Jetstream's features, the underlying logic used to implement the feature may be customized by modifying a corresponding action class.
+Как и большинство функций Jetstream, базовая логика, используемая для реализации функции, может быть настроена путем изменения соответствующего класса действий.
 
-The `App\Actions\Fortify\UpdateUserPassword` class will be invoked when the user updates their password. This action is responsible for validating the input and updating the user's password.
+Класс `App\Actions\Fortify\UpdateUserPassword` будет вызываться, когда пользователь обновит свой пароль. Это действие отвечает за проверку ввода и обновление пароля пользователя.
 
-This action utilizes the `App\Actions\Fortify\PasswordValidationRules` trait to determine the validation rules that will be applied to the password. Customizing this trait will uniformly affect the validation rules applied to the password when the user registers, resets their password, or updates their password.
+Это действие использует трейт `App\Actions\Fortify\PasswordValidationRules` для определения правил проверки, которые будут применяться к паролю. Настройка этого свойства будет одинаково влиять на правила проверки, применяемые к паролю, когда пользователь регистрируется, сбрасывает свой пароль или обновляет свой пароль.
 
-### Password Validation Rules
+### Правила проверки пароля
 
-As you may have noticed, the `App\Actions\Fortify\PasswordValidationRules` trait utilizes a custom `Laravel\Fortify\Rules\Password` validation rule object. This object allows you to easily customize the password requirements for your application. By default, the rule requires a password that is at least eight characters in length. However, you may use the following methods to customize the password's requirements:
+Как Вы могли заметить, трейт `App\Actions\Fortify\PasswordValidationRules` использует настраиваемый объект правила проверки `Laravel\Fortify\Rules\Password`. Этот объект позволяет Вам легко настроить требования к паролю для Вашего приложения. По умолчанию для правила требуется пароль длиной не менее восьми символов. Однако Вы можете использовать следующие методы для настройки требований к паролю:
 
 ```php
 use Laravel\Fortify\Rules\Password;
@@ -44,6 +44,6 @@ use Laravel\Fortify\Rules\Password;
 
 ## Представления / Страницы
 
-Typically, the views and pages for these features should not require customization, as they are already feature complete. However, their locations are described below in case you need to make small presentation adjustments to these pages.
+Как правило, представления и страницы для этих функций не требуют настройки, поскольку они уже являются завершенными. Однако их расположение описано ниже на тот случай, если Вам потребуется внести небольшие изменения в презентацию этих страниц.
 
-When using the Livewire stack, the password update view is displayed using the `resources/views/profile/update-password-form.blade.php` Blade template. When using the Inertia stack, this view is displayed using the `resources/js/Pages/Profile/UpdatePasswordForm.vue` template.
+При использовании стека Livewire представление обновления пароля отображается с использованием шаблона Blade `resources/views/profile/update-password-form.blade.php`. При использовании стека Inertia это представление отображается с использованием шаблона `resources/js/Pages/Profile/UpdatePasswordForm.vue`.

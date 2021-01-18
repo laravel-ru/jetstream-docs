@@ -1,30 +1,30 @@
-# Authentication
+# Аутентификация
 
 [[toc]]
 
 ## Введение
 
-Laravel Jetstream automatically scaffolds the login, two-factor login, registration, password reset, and email verification features for your project, allowing you to start building the features you care about instead of worrying about the nitty-gritty details of user authentication.
+Laravel Jetstream автоматически формирует логин, двухфакторный вход, регистрацию, сброс пароля и проверку электронной почты для Вашего проекта, позволяя Вам начать создавать функции, которые Вам нужны, вместо того, чтобы беспокоиться о мельчайших деталях аутентификации пользователя.
 
-![Screenshot of Authentication](./../../assets/img/login.png)
+![Скриншот аутентификации](./../../assets/img/login.png)
 
 ## Laravel Fortify
 
-Under the hood, the authentication portions of Jetstream are powered by [Laravel Fortify](https://github.com/laravel/fortify), which is a front-end agnostic authentication backend for Laravel. Essentially, Fortify defines the routes and controllers for implementing the application's authentication features while the Jetstream UI makes requests to those routes.
+Под капотом аутентификационные части Jetstream работают на [Laravel Fortify](https://github.com/laravel/fortify), который является независимой от внешнего интерфейса серверной частью аутентификации для Laravel. По сути, Fortify определяет маршруты и контроллеры для реализации функций аутентификации приложения, в то время как пользовательский интерфейс Jetstream выполняет запросы к этим маршрутам.
 
-When Jetstream is installed, the `config/fortify.php` configuration file is installed into your application. Within this configuration file, you can customize various aspects of Fortify's behavior, such as the authentication guard that should be used, where users should be redirected after authentication, and more.
+При установке Jetstream в Ваше приложение устанавливается файл конфигурации `config/fortify.php`. В этом файле конфигурации Вы можете настроить различные аспекты поведения Fortify, такие как средство защиты аутентификации, которое следует использовать, куда следует перенаправлять пользователей после аутентификации и многое другое.
 
-Within the `fortify` configuration file, you can also disable entire features of Fortify, such as the ability to update profile information or passwords.
+В файле конфигурации `fortify` Вы также можете отключить все функции Fortify, такие как возможность обновления информации профиля или паролей.
 
 ## Представления / Страницы
 
-When using the Livewire stack, the login view is displayed using the `resources/views/auth/login.blade.php` Blade template. When using the Inertia stack, this view is displayed using the `resources/js/Pages/Auth/Login.vue` template. The directories that contain these views also contain other authentication related views / pages for your application.
+При использовании стека Livewire представление входа отображается с использованием шаблона Blade `resources/views/auth/login.blade.php`. При использовании стека Inertia это представление отображается с использованием шаблона `resources/js/Pages/Auth/Login.vue`. Каталоги, содержащие эти представления, также содержат другие представления/страницы, связанные с аутентификацией для Вашего приложения.
 
-### Customizing The Authentication Views
+### Настройка представлений аутентификации
 
-Laravel Jetstream will automatically render the proper views for your application's login and other authentication screens. However, sometimes you may wish to customize how a particular authentication view is rendered or the data that is received by the view.
+Laravel Jetstream автоматически отобразит правильные представления для входа в Ваше приложение и других экранов аутентификации. Однако иногда может потребоваться настроить способ визуализации определенного представления аутентификации или данных, получаемых представлением.
 
-All of the authentication view's rendering logic may be customized using the appropriate methods available via the `Laravel\Fortify\Fortify` class. Typically, you should call this method from the `boot` method of your application's `App\Providers\JetstreamServiceProvider` class:
+Вся логика визуализации представления аутентификации может быть настроена с использованием соответствующих методов, доступных через класс `Laravel\Fortify\Fortify`. Обычно этот метод следует вызывать из метода `boot` класса `App\Providers\JetstreamServiceProvider` Вашего приложения:
 
 ```php
 use Laravel\Fortify\Fortify;
@@ -42,9 +42,9 @@ public function boot()
 }
 ```
 
-#### Customizing Inertia Authentication Views
+#### Настройка представлений аутентификации Inertia
 
-If your application is using the Inertia stack, you may return Inertia pages from your view customization closures:
+Если Ваше приложение использует стек Inertia, Вы можете вернуть страницы Inertia из Ваших замыканий настройки представления:
 
 ```php
 use Illuminate\Support\Facades\Route;
@@ -59,13 +59,13 @@ Fortify::loginView(function () {
 });
 ```
 
-## Customizing The Authentication Process
+## Настройка процесса аутентификации
 
-### Customizing User Authentication
+### Настройка аутентификации пользователя
 
-Sometimes, you may wish to have full customization over how user credentials are authenticated and how users are retrieved from your application's database. Thankfully, Jetstream allows you to easily accomplish this using the `Fortify::authenticateUsing` method.
+Иногда Вам может потребоваться полная настройка того, как аутентифицируются учетные данные пользователя и как пользователи извлекаются из базы данных Вашего приложения. К счастью, Jetstream позволяет легко сделать это с помощью `Fortify::authenticateUsing`.
 
-The `authenticateUsing` method accepts a closure that receives the incoming HTTP request. The closure is responsible for validating the login credentials attached to the request and returning the associated user instance. If the credentials are invalid or no user can be found, `null` or `false` should be returned by the closure. Typically, this method should be called from the `boot` method of your `JetstreamServiceProvider`:
+Метод `authenticateUsing` принимает замыкание, которое получает входящий HTTP-запрос. Замыкание отвечает за проверку учетных данных для входа, прикрепленных к запросу, и за возврат связанного экземпляра пользователя. Если учетные данные недействительны или пользователь не может быть найден, замыкание должно вернуть `null` или `false`. Обычно этот метод следует вызывать из метода `boot` Вашего `JetstreamServiceProvider`:
 
 ```php
 use App\Models\User;
@@ -93,7 +93,7 @@ public function boot()
 }
 ```
 
-If you prefer to encapsulate your custom authentication process within a class instead of a closure, you may pass a PHP "callable" array to the `authenticateUsing` method:
+Если Вы предпочитаете инкапсулировать свой собственный процесс аутентификации в классе, а не в замыкании, Вы можете передать "вызываемый" массив PHP методу `authenticateUsing`:
 
 ```php
 use App\Actions\AuthenticateLoginAttempt;
@@ -102,15 +102,15 @@ use Laravel\Fortify\Fortify;
 Fortify::authenticateUsing([new AuthenticateLoginAttempt, '__invoke']);
 ```
 
-### Customizing The Authentication Pipeline
+### Настройка конвейера аутентификации
 
-Laravel Fortify, which is Jetstream's underlying authentication library, authenticates login requests through a pipeline of invokable classes.
+Laravel Fortify, которая является базовой библиотекой аутентификации Jetstream, аутентифицирует запросы на вход через конвейер вызываемых классов.
 
-If you would like, you may define a custom pipeline of classes that login requests should be piped through. Each class should have an `__invoke` method which receives the incoming `Illuminate\Http\Request` instance and, like middleware, a `$next` variable that is invoked in order to pass the request to the next class in the pipeline.
+При желании Вы можете определить настраиваемый конвейер классов, через которые должны передаваться запросы на вход. Каждый класс должен иметь метод `__invoke`, который получает входящий экземпляр `Illuminate\Http\Request` и, как мидлвар, переменную `$next`, которая вызывается для передачи запроса следующему классу в конвейере.
 
-To define your custom pipeline, you may use the `Fortify::authenticateThrough` method. This method accepts a closure which should return the array of classes to pipe the login request through. Typically, this method should be called from the `boot` method of your `App\Providers\JetstreamServiceProvider` class.
+Чтобы определить свой собственный конвейер, Вы можете использовать метод `Fortify::authenticateThrough`. Этот метод принимает замыкание, которое должно возвращать массив классов для передачи запроса входа в систему. Обычно этот метод следует вызывать из метода `boot` Вашего класса `App\Providers\JetstreamServiceProvider`.
 
-The example below contains the default pipeline definition that you may use as a starting point when making your own modifications:
+В приведенном ниже примере содержится определение конвейера по умолчанию, которое Вы можете использовать в качестве отправной точки при внесении собственных изменений:
 
 ```php
 use Laravel\Fortify\Actions\AttemptToAuthenticate;
@@ -130,26 +130,26 @@ Fortify::authenticateThrough(function (Request $request) {
 });
 ```
 
-## Password Reset
+## Восстановление пароля
 
-In addition to scaffolding views and actions related to login / authentication, Jetstream also scaffolds the resources needed for a user to reset their password in case it is forgotten. Of course, this feature utilizes Laravel's underlying [password reset features](https://laravel.com/docs/passwords).
+В дополнение к формированию представлений и действий, связанных с входом в систему / аутентификацией, Jetstream также формирует ресурсы, необходимые пользователю для сброса своего пароля в случае, если он будет забыт. Конечно, эта функция использует базовые [функции сброса пароля](https://laravel.com/docs/passwords).
 
 :::tip Laravel Mail
 
-Before using the password reset feature, you should ensure that your Laravel application is configured to [send emails](https://laravel.com/docs/mail). Otherwise, Laravel will not be able to send password reset links to your application's users.
+Перед использованием функции сброса пароля Вы должны убедиться, что Ваше приложение Laravel настроено на [отправку электронных писем](https://laravel.com/docs/mail). В противном случае Laravel не сможет отправлять ссылки для сброса пароля пользователям Вашего приложения.
 :::
 
 ### Действия
 
-As typical of most Jetstream features, the logic executed to satisfy password reset requests can be found in an action class within your application. Remember, actions are granular classes that are responsible for performing a single task related to a Jetstream or Fortify feature.
+Как типично для большинства функций Jetstream, логику, выполняемую для удовлетворения запросов на сброс пароля, можно найти в классе действий в Вашем приложении. Помните, что действия - это гранулярные классы, которые отвечают за выполнение одной задачи, связанной с функцией Jetstream или Fortify.
 
-Specifically, the `App\Actions\Fortify\ResetUserPassword` class will be invoked when a user resets their password. This action is responsible for validating the user's new password and updating the password on the user instance. Therefore, any customizations you wish to make to user password reset logic should be made in this class. The action receives an array of `$input` that contains all of the input from the incoming request.
+В частности, класс `App\Actions\Fortify\ResetUserPassword` будет вызываться, когда пользователь сбрасывает свой пароль. Это действие отвечает за проверку нового пароля пользователя и обновление пароля в экземпляре пользователя. Следовательно, любые настройки, которые Вы хотите внести в логику сброса пароля пользователя, должны выполняться в этом классе. Действие получает массив `$input`, который содержит все входные данные входящего запроса.
 
-#### Password Validation Rules
+#### Правила проверки пароля
 
-The `App\Actions\Fortify\CreateNewUser`, `App\Actions\Fortify\ResetUserPassword`, and `App\Actions\Fortify\UpdateUserPassword` actions all utilize the `App\Actions\Fortify\PasswordValidationRules` trait.
+Действия `App\Actions\Fortify\CreateNewUser`, `App\Actions\Fortify\ResetUserPassword` и `App\Actions\Fortify\UpdateUserPassword` используют трейт `App\Actions\Fortify\PasswordValidationRules`.
 
-As you may have noticed, the `App\Actions\Fortify\PasswordValidationRules` trait utilizes a custom `Laravel\Fortify\Rules\Password` validation rule object. This object allows you to easily customize the password requirements for your application. By default, the rule requires a password that is at least eight characters in length. However, you may use the following methods to customize the password's requirements:
+Как Вы могли заметить, трейт `App\Actions\Fortify\PasswordValidationRules` использует настраиваемый объект правила проверки `Laravel\Fortify\Rules\Password`. Этот объект позволяет Вам легко настроить требования к паролю для Вашего приложения. По умолчанию для правила требуется пароль длиной не менее восьми символов. Однако Вы можете использовать следующие методы для настройки требований к паролю:
 
 ```php
 use Laravel\Fortify\Rules\Password;
@@ -175,12 +175,12 @@ use Laravel\Fortify\Rules\Password;
 
 ### Представления / Страницы
 
-Jetstream's password reset feature is implemented using two screens: a screen where the user can request a password reset link and a screen that actually allows the user to reset their password.
+Функция сброса пароля Jetstream реализована с использованием двух экранов: экрана, на котором пользователь может запросить ссылку для сброса пароля, и экрана, который фактически позволяет пользователю сбросить свой пароль.
 
-#### Password Reset Link Request
+#### Запрос ссылки для сброса пароля
 
-When using the Livewire stack, the password reset link request view is displayed using the `resources/views/auth/forgot-password.blade.php` Blade template. When using the Inertia stack, this view is displayed using the `resources/js/Pages/Auth/ForgotPassword.vue` template.
+При использовании стека Livewire окно запроса ссылки для сброса пароля отображается с использованием шаблона Blade `resources/views/auth/forgot-password.blade.php`. При использовании стека Inertia это представление отображается с использованием шаблона `resources/js/Pages/Auth/ForgotPassword.vue`.
 
-#### Reset Password
+#### Сброс пароля
 
-When using the Livewire stack, the password reset view is displayed using the `resources/views/auth/reset-password.blade.php` Blade template. When using the Inertia stack, this view is displayed using the `resources/js/Pages/Auth/ResetPassword.vue` template.
+При использовании стека Livewire окно сброса пароля отображается с использованием шаблона Blade `resources/views/auth/reset-password.blade.php`. При использовании стека Inertia это представление отображается с использованием шаблона `resources/js/Pages/Auth/ResetPassword.vue`.

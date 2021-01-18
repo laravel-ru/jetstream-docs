@@ -1,26 +1,26 @@
-# Password Confirmation
+# Подтверждение пароля
 
 [[toc]]
 
 ## Введение
 
-While building your application, you may occasionally have actions that should require the user to confirm their password before the action is performed. For example, Jetstream itself requires users to confirm their password before changing their two-factor authentication settings. Thankfully, Jetstream has built-in functionality to make this a cinch.
+При создании приложения Вы можете иногда выполнять действия, требующие от пользователя подтверждения пароля перед выполнением действия. Например, сама Jetstream требует, чтобы пользователи подтвердили свой пароль перед изменением настроек двухфакторной аутентификации. К счастью, в Jetstream есть встроенные функции, которые делают это удобным.
 
-Jetstream provides two approaches to password confirmation: redirect based password confirmation and modal based password confirmation.
+Jetstream предлагает два подхода к подтверждению пароля: подтверждение пароля на основе перенаправления и модальное подтверждение пароля.
 
-#### Redirect Based Password Confirmation
+#### Подтверждение пароля на основе перенаправления
 
-Redirect based password confirmation is typically used when the user needs to confirm their password before accessing an entire screen that is rendered by your application, such as a billing settings screen.
+Подтверждение пароля на основе перенаправления обычно используется, когда пользователю необходимо подтвердить свой пароль перед доступом ко всему экрану, отображаемому Вашим приложением, например экрану настроек биллинга.
 
-This form of password confirmation redirects the user to a dedicated password confirmation screen where they must confirm their password before being redirected to their intended destination.
+Эта форма подтверждения пароля перенаправляет пользователя на специальный экран подтверждения пароля, где он должен подтвердить свой пароль перед перенаправлением в предполагаемое место назначения.
 
-#### Modal Based Password Confirmation
+#### Подтверждение пароля на модальной основе
 
-Modal based password authentication might be used when you would like the user to confirm their password before performing a specific action, such as when enabling two-factor authentication.
+Модальная парольная аутентификация может использоваться, когда Вы хотите, чтобы пользователь подтвердил свой пароль перед выполнением определенного действия, например, при включении двухфакторной аутентификации.
 
-This form of password confirmation displays a modal window that allows the user to confirm their password before their intended request is executed.
+Эта форма подтверждения пароля отображает модальное окно, которое позволяет пользователю подтвердить свой пароль перед выполнением предполагаемого запроса.
 
-## Redirect Password Confirmation
+## Перенаправление подтверждение пароля
 
 The following documentation will discuss how to use redirect based password confirmation in Jetstream. Redirect based password confirmation is typically used when the user needs to confirm their password before accessing an entire screen that is rendered by your application, such as a billing settings screen.
 
@@ -56,7 +56,7 @@ After adding this trait to a component, you should call the `ensurePasswordIsCon
 
 ```php
 /**
- * Enable administration mode for user.
+ * Включить режим администрирования для пользователя.
  *
  * @return void
  */
@@ -96,21 +96,21 @@ That page that renders the Inertia's stack's password confirmation screen is loc
 Once the user has confirmed their password, they will not be required to re-enter their password until the number of seconds defined by the your application's `auth.password_timeout` configuration option have elapsed:
 :::
 
-## Modal Password Confirmation
+## Модальное подтверждение пароля
 
-The following documentation will discuss how to use modal based password confirmation in Jetstream. Modal based password authentication is typically used when you would like the user to confirm their password before performing a specific action, such as when enabling two-factor authentication.
+В следующей документации обсуждается, как использовать модальное подтверждение пароля в Jetstream. Модальная парольная аутентификация обычно используется, когда Вы хотите, чтобы пользователь подтвердил свой пароль перед выполнением определенного действия, например, при включении двухфакторной аутентификации.
 
-This form of password confirmation displays a modal window that allows the user to confirm their password before their intended request is executed.
+Эта форма подтверждения пароля отображает модальное окно, которое позволяет пользователю подтвердить свой пароль перед выполнением предполагаемого запроса.
 
-![Screenshot of Password Confirmation](./../../assets/img/modal-confirm.png)
+![Скриншот подтверждения пароля](./../../assets/img/modal-confirm.png)
 
-### Modal Password Confirmation Via Livewire
+### Модальное подтверждение пароля через Livewire
 
-#### Component Preparation
+#### Подготовка компонентов
 
-If you are using the Livewire stack, the Livewire component that contains the action that should require password confirmation before being invoked should use the `Laravel\Jetstream\ConfirmsPasswords` trait.
+Если Вы используете стек Livewire, компонент Livewire, содержащий действие, которое должно требовать подтверждения пароля перед вызовом, должен использовать трейт `Laravel\Jetstream\ConfirmsPasswords`.
 
-#### The `confirms-password` Blade Component
+#### Blade компоненты `confirms-password`
 
 Next, in your application's user interface, you should wrap the button that triggers the action within the `confirms-password` Blade component. The `confirms-password` wrapper component should contain a `wire:then` directive that specifies which Livewire action should be run once the user's password has been confirmed:
 
@@ -122,13 +122,13 @@ Next, in your application's user interface, you should wrap the button that trig
 </x-jet-confirms-password>
 ```
 
-#### Ensuring The Password Is Confirmed
+#### Обеспечение подтверждения пароля
 
-After adding the `confirms-password` component to your application's user interface, you should call the `ensurePasswordIsConfirmed` method within the Livewire action that requires password confirmation. This should be done at the very beginning of the relevant action method:
+После добавления компонента `confirms-password` в пользовательский интерфейс Вашего приложения Вы должны вызвать метод `ensurePasswordIsConfirmed` в действии Livewire, которое требует подтверждения пароля. Делать это нужно в самом начале соответствующего метода действий:
 
 ```php
 /**
- * Enable administration mode for user.
+ * Включить режим администрирования для пользователя.
  *
  * @return void
  */
@@ -140,16 +140,16 @@ public function enableAdminMode()
 }
 ```
 
-:::warning Password Confirmation Expiration
+:::warning Срок действия подтверждения пароля
 
-Once the user has confirmed their password, they will not be required to re-enter their password until the number of seconds defined by the your application's `auth.password_timeout` configuration option have elapsed:
+После того, как пользователь подтвердит свой пароль, ему не потребуется повторно вводить пароль до тех пор, пока не истечет количество секунд, определенное параметром конфигурации Вашего приложения `auth.password_timeout`:
 :::
 
-### Modal Password Confirmation Via Inertia
+### Модальное подтверждение пароля через Inertia
 
-#### The `ConfirmsPassword` Vue Component
+#### Vue компоненты `ConfirmsPassword`
 
-If you are using the Inertia stack, you should wrap the user interface element that triggers an action requiring password confirmation with the `ConfirmsPassword` Vue component provided by Jetstream. To get started, import the `ConfirmsPassword` component into your page:
+Если Вы используете стек Inertia, Вам следует обернуть элемент пользовательского интерфейса, который запускает действие, требующее подтверждения пароля, с помощью компонента Vue `ConfirmsPassword`, предоставляемого Jetstream. Для начала импортируйте компонент `ConfirmsPassword` на свою страницу:
 
 ```js
 import JetConfirmsPassword from './Jetstream/ConfirmsPassword'
@@ -162,19 +162,19 @@ export default {
 }
 ```
 
-Next, wrap the component around the user interface element that triggers the action that should be confirmed. Your page should listen for the `ConfirmsPassword` component's `@confirmed` event in order to trigger the method that should be called once the user's password is confirmed:
+Затем оберните компонент вокруг элемента пользовательского интерфейса, который запускает действие, которое необходимо подтвердить. Ваша страница должна прослушивать событие `@confirmed` компонента `ConfirmsPassword`, чтобы активировать метод, который должен вызываться после подтверждения пароля пользователя:
 
 ```html
 <jet-confirms-password @confirmed="enableAdminMode">
     <jet-button type="button" :class="{ 'opacity-25': enabling }" :disabled="enabling">
-        Enable
+        Включить
     </jet-button>
 </jet-confirms-password>
 ```
 
-#### Ensuring The Password Is Confirmed
+#### Обеспечение подтверждения пароля
 
-After adding the `ConfirmsPassword` component to your user interface, you should ensure that the route that performs the confirmed action is assigned the `password.confirm` middleware. This middleware is included with the default installation of Laravel:
+После добавления компонента `ConfirmsPassword` к вашему пользовательскому интерфейсу вы должны убедиться, что маршруту, выполняющему подтвержденное действие, назначено мидлвару `password.confirm`. Этот мидлвар включен в стандартную установку Laravel:
 
 ```php
 Route::post('/admin-mode', function () {
@@ -182,14 +182,14 @@ Route::post('/admin-mode', function () {
 })->middleware(['password.confirm']);
 ```
 
-:::warning Password Confirmation Expiration
+:::warning Срок действия подтверждения пароля
 
-Once the user has confirmed their password, they will not be required to re-enter their password until the number of seconds defined by the your application's `auth.password_timeout` configuration option have elapsed:
+После того, как пользователь подтвердит свой пароль, ему не потребуется повторно вводить пароль до тех пор, пока не истечет количество секунд, определенное параметром конфигурации Вашего приложения `auth.password_timeout`:
 :::
 
-## Customizing How Passwords Are Confirmed
+## Настройка способа подтверждения паролей
 
-Sometimes, you may wish to customize how the user's password is validated during confirmation. To do so, you may use the `Fortify::confirmPasswordsUsing` method. This method accepts a closure which receives the authenticated user instance and the `password` input field of the request. The closure should return `true` if the password is valid for the given user. Typically, this method should be called from the `boot` method of your `JetstreamServiceProvider`:
+Иногда Вам может потребоваться настроить способ проверки пароля пользователя во время подтверждения. Для этого Вы можете использовать метод `Fortify::confirmPasswordsUsing`. Этот метод принимает замыкание, которое получает экземпляр аутентифицированного пользователя и поле ввода запроса `password`. Замыкание должно вернуть `true`, если пароль действителен для данного пользователя. Обычно этот метод следует вызывать из метода `boot` Вашего `JetstreamServiceProvider`:
 
 ```php
 use Illuminate\Support\Facades\Hash;
@@ -210,7 +210,7 @@ public function boot()
 }
 ```
 
-If you prefer to encapsulate your password confirmation process within a class instead of a closure, you may pass a PHP "callable" array to the `confirmPasswordsUsing` method:
+Если Вы предпочитаете инкапсулировать процесс подтверждения пароля в классе, а не в замыкании, Вы можете передать "вызываемый" массив PHP методу  `confirmPasswordsUsing`:
 
 ```php
 use App\Actions\ConfirmPassword;
