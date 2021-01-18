@@ -18,7 +18,7 @@
 
 Действия `App\Actions\Fortify\CreateNewUser`, `App\Actions\Fortify\ResetUserPassword` и `App\Actions\Fortify\UpdateUserPassword` используют трейт `App\Actions\Fortify\PasswordValidationRules`.
 
-Как вы могли заметить, трейт `App\Actions\Fortify\PasswordValidationRules` использует настраиваемый объект правила проверки `Laravel\Fortify\Rules\Password`. Этот объект позволяет Вам легко настроить требования к паролю для Вашего приложения. По умолчанию для правила требуется пароль длиной не менее восьми символов. Однако Вы можете использовать следующие методы для настройки требований к паролю:
+Как Вы могли заметить, трейт `App\Actions\Fortify\PasswordValidationRules` использует настраиваемый объект правила проверки `Laravel\Fortify\Rules\Password`. Этот объект позволяет Вам легко настроить требования к паролю для Вашего приложения. По умолчанию для правила требуется пароль длиной не менее восьми символов. Однако Вы можете использовать следующие методы для настройки требований к паролю:
 
 ```php
 use Laravel\Fortify\Rules\Password;
