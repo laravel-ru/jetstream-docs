@@ -10,7 +10,7 @@
 
 :::tip Livewire и Inertia
 
-Прежде чем погрузиться в Jetstream, Вы должны знать, как использовать [Laravel Livewire](https://laravel-livewire.com) или [Inertia](https://inertiajs.com). Jetstream в значительной степени полагается на эти технологии, чтобы обеспечить первоклассный опыт для пользователей и разработчиков.
+Прежде чем погрузиться в Jetstream, Вы должны знать, как использовать [Laravel Livewire](https://laravel-livewire.com) или [Inertia](https://inertiajs.ru). Jetstream в значительной степени полагается на эти технологии, чтобы обеспечить первоклассный опыт для пользователей и разработчиков.
 
 :::
 
