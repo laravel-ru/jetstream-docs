@@ -46,3 +46,22 @@ When using Livewire, the team creation screen is defined by the `resources/views
 When team support is enabled, Jetstream includes a screen that allows users to manage the settings for their existing teams, such as changing the team name or inviting additional team members. You're free to add your own additional panels to these pages. To do so, you may simply edit the templates that define the page.
 
 When using Livewire, the team settings screen is defined by the `resources/views/teams/show.blade.php` Blade template. When using Inertia, this screen is rendered by the `resources/js/Pages/Teams/Show.vue` component.
+
+### Banner Alerts
+
+Jetstream includes a notification banner which can be displayed at the top of your application's UI. If you are using the Livewire stack, you should ensure this notification banner has been published using the `vendor:publish` command:
+
+```bash
+php artisan vendor:publish --tag=jetstream-views
+```
+
+After publishing the Jetstream components, your application will contain the banner component at `vendor/components/banner.blade.php`. If you are using the Inertia stack, your banner component will be contained within the `Banner.vue` Vue component.
+
+To instruct Jetstream to display the banner, you must flash a `flash.banner` message to the session. In addition to the banner message, you may also instruct Jetstream to display the banner with a `success` style or a `danger` style:
+
+```php
+$request->session()->flash('flash.banner', 'Yay it works!');
+$request->session()->flash('flash.bannerStyle', 'success');
+
+return $this->redirect('/');
+```
