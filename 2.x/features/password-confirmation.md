@@ -112,7 +112,7 @@ Route::post('/billing', function () {
 
 #### Blade компоненты `confirms-password`
 
-Next, in your application's user interface, you should wrap the button that triggers the action within the `confirms-password` Blade component. The `confirms-password` wrapper component should contain a `wire:then` directive that specifies which Livewire action should be run once the user's password has been confirmed:
+Затем в пользовательском интерфейсе Вашего приложения Вы должны заключить кнопку, которая запускает действие, в Blade-компонент `confirms-password`. Компонент оболочки `confirms-password` должен содержать директиву `wire:then`, которая указывает, какое действие Livewire должно выполняться после подтверждения пароля пользователя:
 
 ```html
 <x-jet-confirms-password wire:then="enableAdminMode">
