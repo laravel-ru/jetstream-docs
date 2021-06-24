@@ -64,5 +64,5 @@ php artisan vendor:publish --tag=jetstream-views
 $request->session()->flash('flash.banner', 'Yay it works!');
 $request->session()->flash('flash.bannerStyle', 'success');
 
-return $this->redirect('/');
+return redirect('/');
 ```
